@@ -1,13 +1,9 @@
 import React from 'react';
 
-class ButtonAutoriz extends React.Component {
-	render() {
-		return (
-			<div className="login-btn">
-				<button type="submit">{`${this.props.forms}`}</button>
-			</div>
-		)
-	}
-}
+const ButtonAutoriz = ({ value }) => (
+	<div className="login-btn">
+		<button type="submit">{value}</button>
+	</div>
+);
 
 export default ButtonAutoriz;

@@ -9,9 +9,9 @@ class Login extends React.Component {
                 <h1>Вход</h1>
 
                 <form onSubmit={()=>this.props.changePage('map')}>
-                    <Input descript="Имя пользователя*" type="text"/>
-                    <Input descript="Пароль*" type="password"/>
-                    <ButtonAutoriz forms="Войти" />
+                    <Input description="Имя пользователя*" type="text"/>
+                    <Input description="Пароль*" type="password"/>
+                    <ButtonAutoriz value="Войти" />
                 </form>
             </div>
         )

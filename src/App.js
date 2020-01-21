@@ -30,25 +30,19 @@ const PAGES = [
 ];
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activePageId: 'login'
-        };
-    }
 
-    changePage = pageId => {
-        this.setState({
-            activePageId: pageId
-        });
+    state = {activePageId: 'login'};
+
+    changePage = activePageId => {
+        this.setState({activePageId});
     };
 
     getPageData = () => {
-        return PAGES.find(el => el.id === this.state.activePageId);
+        return PAGES.find(({ id }) => id === this.state.activePageId);
     };
 
     render() {
-        const activeComponent = this.getPageData().component(this.changePage);
+        const pageContent = this.getPageData().component(this.changePage);
 
         return (
             <div className="App">
@@ -57,7 +51,7 @@ class App extends React.Component {
                     changePage={this.changePage}
                     activePageId={this.state.activePageId}
                 />
-                {activeComponent}
+                {pageContent}
             </div>
         );
     }

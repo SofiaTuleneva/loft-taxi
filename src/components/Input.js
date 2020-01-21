@@ -1,14 +1,10 @@
 import React from 'react';
 
-class Input extends React.Component {
-	render() {
-		return (
-			<label>
-				<div>{`${this.props.descript}`}</div>
-				<input type={`${this.props.type}`}/>
-			</label>
-		)
-	}
-}
+const Input = ({description, type}) => (
+	<label>
+		<div>{description}</div>
+		<input type={type}/>
+	</label>
+);
 
 export default Input;

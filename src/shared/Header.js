@@ -10,13 +10,13 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className="Header">
-				{this.props.pages.map(page => (
+				{this.props.pages.map(({ id, name }) => (
 					<button
-						key={page.id}
-						onClick={e => this.handleMenuClick(e, page.id)}
-						className={page.id === this.props.activePageId ? 'activeButton' : null}
+						key={id}
+						onClick={e => this.handleMenuClick(e, id)}
+						className={id === this.props.activePageId ? 'activeButton' : null}
 					>
-					{page.name}
+					{name}
 					</button>
 				))}
 			</div>
