@@ -1,60 +1,101 @@
 import React from 'react';
-import './App.css';
-import Login from './login/Login';
-import Map from './map/Map';
-import Profile from './profile/Profile';
-import Signup from './signup/Signup';
-import Header from './shared/Header';
+import UserContext from "./context/UserContext";
+
+// Styles
+import './scss/App.scss';
+
+// Theme
+import {ThemeProvider} from '@material-ui/core';
+import {theme} from 'loft-taxi-mui-theme';
+
+// Components
+import Header from './components/Header';
+import Login from './components/Login';
+import Map from './components/Map';
+import Profile from './components/Profile';
+import Signup from './components/Signup';
 
 const PAGES = [
-    {
-        id: 'login',
-        name: 'Вход',
-        component: changePage => <Login changePage={changePage} />
-    },
-    {
-        id: 'map',
-        name: 'Карта',
-        component: () => <Map />
-    },
-    {
-        id: 'profile',
-        name: 'Профиль',
-        component: () => <Profile />
-    },
-    {
-        id: 'signup',
-        name: 'Регистрация',
-        component: changePage => <Signup changePage={changePage} />
-    }
+	{
+		id: 'map',
+		text: 'Карта',
+		component: () => <Map/>,
+		showInMenu: true
+	},
+	{
+		id: 'profile',
+		text: 'Профиль',
+		component: () => <Profile/>,
+		showInMenu: true
+	},
+	{
+		id: 'login',
+		text: 'Вход',
+		component: () => <Login/>,
+		showInMenu: false
+	},
+	{
+		id: 'signup',
+		text: 'Регистрация',
+		component: () => <Signup/>,
+		showInMenu: false
+	},
 ];
 
 class App extends React.Component {
 
-    state = {activePageId: 'login'};
+	// State
+	state = {
+		activePageId: 'login',
+		isLoggedIn: false,
+	};
 
-    changePage = activePageId => {
-        this.setState({activePageId});
-    };
+	setPage = activePageId => {
+		this.setState({activePageId});
+		// return 'ololo';
+	};
 
-    getPageData = () => {
-        return PAGES.find(({ id }) => id === this.state.activePageId);
-    };
+	getPageData = () => {
+		return PAGES.find(({id}) => id === this.state.activePageId);
+	};
 
-    render() {
-        const pageContent = this.getPageData().component(this.changePage);
+	login = (login, password) => {
+		this.setState({isLoggedIn: true});
+		this.setPage("map");
+	};
 
-        return (
-            <div className="App">
-                <Header 
-                    pages={PAGES}
-                    changePage={this.changePage}
-                    activePageId={this.state.activePageId}
-                />
-                {pageContent}
-            </div>
-        );
-    }
+	logout = () => {
+		this.setState({isLoggedIn: false});
+		this.setPage("login");
+	};
+
+	render() {
+
+		const pageContent = this.getPageData().component(this.setPage);
+
+		return (
+			<div className="App">
+				<ThemeProvider theme={theme}>
+					<UserContext.Provider
+						value={{
+							login: this.login,
+							logout: this.logout,
+							isLoggedIn: this.state.isLoggedIn,
+						}}
+					>
+						{this.state.isLoggedIn &&
+						<Header
+							pages={PAGES}
+							activePageId={this.state.activePageId}
+							setPage={this.setPage}
+						/>
+						}
+						{pageContent}
+					</UserContext.Provider>
+				</ThemeProvider>
+			</div>
+		);
+	}
 }
 
 export default App;
