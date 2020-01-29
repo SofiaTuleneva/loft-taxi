@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types'
 import UserContext from "../../context/UserContext";
 import HeaderLogo from "./HeaderLogo";
-import HeaderButton from "./HeaderButton";
+import HeaderMenuItem from "./HeaderButton";
 
 const Header = ({pages, setPage}) => {
 
@@ -30,7 +30,7 @@ const Header = ({pages, setPage}) => {
 					<HeaderLogo/>
 					<div className="header__menu">
 						{pagesFiltered.map(({id, text}) => (
-							<HeaderButton
+							<HeaderMenuItem
 								key={id}
 								text={text}
 								handleClick={e => handleMenuClick(e, id)}

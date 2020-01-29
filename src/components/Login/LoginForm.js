@@ -12,6 +12,7 @@ const LoginForm = () => {
 
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
+	const [isError, setError] = useState(false);
 
 	// Context
 	const user = useContext(UserContext);
@@ -19,14 +20,16 @@ const LoginForm = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		if (login && password) {
-			user.login(login, password);
+			if (user) user.login(login, password);
 		} else {
-			alert('Введите пароль или логин!')
+			setError(true);
+			// alert('Введите пароль или логин!')
 		}
 	};
 
 	const handleChange = useCallback(
 		({target}) => {
+			setError(false);
 			if (target.name === "login") {
 				setLogin(target.value);
 			} else {
@@ -52,6 +55,7 @@ const LoginForm = () => {
 							   name="login"
 							   value={login}
 							   onChange={handleChange}
+							   inputProps={{'data-testid': 'login-field'}}
 						/>
 					</FormControl>
 				</div>
@@ -64,11 +68,13 @@ const LoginForm = () => {
 							   name="password"
 							   value={password}
 							   onChange={handleChange}
+							   inputProps={{'data-testid': 'password-field'}}
 						/>
 					</FormControl>
 				</div>
+				{isError ? <p data-testid="error-message">Введите логин и пароль!</p>: ''}
 				<div className="button__group">
-					<Button type="submit" variant="contained" color="primary">
+					<Button type="submit" data-testid="submit-button" variant="contained" color="primary">
 						Войти
 					</Button>
 				</div>

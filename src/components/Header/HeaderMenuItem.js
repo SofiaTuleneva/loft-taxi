@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const HeaderButton = ({handleClick, text}) => {
+const HeaderMenuItem = ({handleClick, text}) => {
 	return (
 		<button onClick={handleClick} className="menu__item">
 			{text}
@@ -9,9 +9,9 @@ const HeaderButton = ({handleClick, text}) => {
 	)
 };
 
-HeaderButton.propTypes = {
+HeaderMenuItem.propTypes = {
 	handleClick: PropTypes.func.isRequired,
 	text: PropTypes.string.isRequired,
 };
 
-export default HeaderButton;
+export default HeaderMenuItem;

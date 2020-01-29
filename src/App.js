@@ -19,25 +19,25 @@ const PAGES = [
 	{
 		id: 'map',
 		text: 'Карта',
-		component: () => <Map/>,
+		component: <Map/>,
 		showInMenu: true
 	},
 	{
 		id: 'profile',
 		text: 'Профиль',
-		component: () => <Profile/>,
+		component: <Profile/>,
 		showInMenu: true
 	},
 	{
 		id: 'login',
 		text: 'Вход',
-		component: () => <Login/>,
+		component: <Login/>,
 		showInMenu: false
 	},
 	{
 		id: 'signup',
 		text: 'Регистрация',
-		component: () => <Signup/>,
+		component: <Signup/>,
 		showInMenu: false
 	},
 ];
@@ -52,7 +52,6 @@ class App extends React.Component {
 
 	setPage = activePageId => {
 		this.setState({activePageId});
-		// return 'ololo';
 	};
 
 	getPageData = () => {
@@ -71,7 +70,7 @@ class App extends React.Component {
 
 	render() {
 
-		const pageContent = this.getPageData().component(this.setPage);
+		const pageContent = this.getPageData().component;
 
 		return (
 			<div className="App">
