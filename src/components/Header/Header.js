@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types'
 import UserContext from "../../context/UserContext";
 import HeaderLogo from "./HeaderLogo";
-import HeaderMenuItem from "./HeaderButton";
+import HeaderMenuItem from "./HeaderMenuItem";
 
 const Header = ({pages, setPage}) => {
 
