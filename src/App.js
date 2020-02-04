@@ -1,6 +1,14 @@
 import React, {PureComponent} from 'react';
 import UserContext from "./context/UserContext";
 import {connect} from 'react-redux';
+import {Route, Switch, Redirect} from 'react-router-dom';
+
+import {
+	getAddresses,
+	getIsLoading,
+	getError,
+	fetchAddressesRequest,
+} from './modules/addresses/';
 
 // Styles
 import './scss/App.scss';
@@ -10,18 +18,10 @@ import {ThemeProvider} from '@material-ui/core';
 import {theme} from 'loft-taxi-mui-theme';
 
 // Components
-import Header from './components/Header';
 import Login from './components/Login';
 import Map from './components/Map';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
-
-import {
-	getAddresses,
-	getIsLoading,
-	getError,
-	fetchAddressesRequest,
-} from './modules/addresses/';
 
 const PAGES = [
 	{
@@ -83,44 +83,56 @@ class App extends PureComponent {
 
 	render() {
 
-		const {addresses, isLoading, error} = this.props;
+		// const {addresses, isLoading, error} = this.props;
+		// if (isLoading) return <p>Данные загружаются...</p>;
+		// if (error) return <p>Произошла сетевая ошибка</p>;
 
-		if (isLoading) return <p>Данные загружаются...</p>;
-		if (error) return <p>Произошла сетевая ошибка</p>;
-
-		const pageContent = this.getPageData().component;
+		// const pageContent = this.getPageData().component;
 
 		return (
 			<div className="App">
 				<ThemeProvider theme={theme}>
 
-					<UserContext.Provider
-						value={{
-							login: this.login,
-							logout: this.logout,
-							isLoggedIn: this.state.isLoggedIn,
-						}}
-					>
 
-						{this.state.isLoggedIn &&
-						<Header
-							pages={PAGES}
-							activePageId={this.state.activePageId}
-							setPage={this.setPage}
-						/>
-						}
+					{/*<UserContext.Provider*/}
+					{/*	value={{*/}
+					{/*		login: this.login,*/}
+					{/*		logout: this.logout,*/}
+					{/*		isLoggedIn: this.state.isLoggedIn,*/}
+					{/*	}}*/}
+					{/*>*/}
 
-						{/*Adresses*/}
-						{addresses.length &&
-						addresses.map((item, i) => (
-							<div key={i}>
-								Пункт прибытия {i + 1}: {item}
-							</div>
-						))}
+					{/*	{this.state.isLoggedIn &&*/}
+					{/*	<Header*/}
+					{/*		pages={PAGES}*/}
+					{/*		activePageId={this.state.activePageId}*/}
+					{/*		setPage={this.setPage}*/}
+					{/*	/>*/}
+					{/*	}*/}
 
-						{pageContent}
+					{/*	/!*Adresses*!/*/}
+					{/*	{addresses.length &&*/}
+					{/*	addresses.map((item, i) => (*/}
+					{/*		<div key={i}>*/}
+					{/*			Пункт прибытия {i + 1}: {item}*/}
+					{/*		</div>*/}
+					{/*	))}*/}
 
-					</UserContext.Provider>
+					{/*	{pageContent}*/}
+
+					{/*</UserContext.Provider>*/}
+
+
+					<>
+						<Switch>
+							<Route exact path="/map" component={Map}/>
+							<Route exact path="/profile" component={Profile}/>
+							<Route path="/login" component={Login}/>
+							<Route path="/signup" component={Signup}/>
+							<Redirect to="/map"/>
+						</Switch>
+					</>
+
 				</ThemeProvider>
 			</div>
 		);

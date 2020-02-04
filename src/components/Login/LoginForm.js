@@ -23,7 +23,6 @@ const LoginForm = () => {
 			if (user) user.login(login, password);
 		} else {
 			setError(true);
-			// alert('Введите пароль или логин!')
 		}
 	};
 
@@ -43,9 +42,11 @@ const LoginForm = () => {
 		<div>
 			<form onSubmit={handleSubmit} className="login__form">
 				<h1 className="form__title">Войти</h1>
+
 				<div className="form__subtitle">
-					Новый пользователь? <a href="/" className="form__link">Зарегистрируйтесь</a>
+					Новый пользователь? <a href="/signup" className="form__link">Зарегистрируйтесь</a>
 				</div>
+
 				<div className="input__group">
 					<FormControl fullWidth>
 						<InputLabel htmlFor="login">Login:</InputLabel>
@@ -59,6 +60,7 @@ const LoginForm = () => {
 						/>
 					</FormControl>
 				</div>
+
 				<div className="input__group">
 					<FormControl fullWidth>
 						<InputLabel htmlFor="password">Password:</InputLabel>
@@ -72,7 +74,9 @@ const LoginForm = () => {
 						/>
 					</FormControl>
 				</div>
+
 				{isError ? <p data-testid="error-message">Введите логин и пароль!</p>: ''}
+
 				<div className="button__group">
 					<Button type="submit" data-testid="submit-button" variant="contained" color="primary">
 						Войти

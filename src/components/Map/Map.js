@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import mapboxgl from "mapbox-gl";
 import {mapboxToken} from "../../constants/tokens";
+import Header from '../Header';
 
 const Map = () => {
 	const mapRef = useRef();
@@ -15,7 +16,11 @@ const Map = () => {
 		});
 	}, []);
 
-	return <div className="mapbox" ref={mapRef}/>;
+	return (
+		<>
+			<Header/>
+			<div className="mapbox" ref={mapRef}/>
+		</>);
 };
 
 export default Map;
