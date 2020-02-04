@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import UserContext from "./context/UserContext";
+import {connect} from 'react-redux';
 
 // Styles
 import './scss/App.scss';
@@ -14,6 +15,13 @@ import Login from './components/Login';
 import Map from './components/Map';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
+
+import {
+	getAddresses,
+	getIsLoading,
+	getError,
+	fetchAddressesRequest,
+} from './modules/addresses/';
 
 const PAGES = [
 	{
@@ -42,7 +50,7 @@ const PAGES = [
 	},
 ];
 
-class App extends React.Component {
+class App extends PureComponent {
 
 	// State
 	state = {
@@ -68,13 +76,24 @@ class App extends React.Component {
 		this.setPage("login");
 	};
 
+	componentDidMount() {
+		const {fetchAddressesRequest} = this.props;
+		fetchAddressesRequest(180);
+	}
+
 	render() {
+
+		const {addresses, isLoading, error} = this.props;
+
+		if (isLoading) return <p>Данные загружаются...</p>;
+		if (error) return <p>Произошла сетевая ошибка</p>;
 
 		const pageContent = this.getPageData().component;
 
 		return (
 			<div className="App">
 				<ThemeProvider theme={theme}>
+
 					<UserContext.Provider
 						value={{
 							login: this.login,
@@ -82,6 +101,7 @@ class App extends React.Component {
 							isLoggedIn: this.state.isLoggedIn,
 						}}
 					>
+
 						{this.state.isLoggedIn &&
 						<Header
 							pages={PAGES}
@@ -89,7 +109,17 @@ class App extends React.Component {
 							setPage={this.setPage}
 						/>
 						}
+
+						{/*Adresses*/}
+						{addresses.length &&
+						addresses.map((item, i) => (
+							<div key={i}>
+								Пункт прибытия {i + 1}: {item}
+							</div>
+						))}
+
 						{pageContent}
+
 					</UserContext.Provider>
 				</ThemeProvider>
 			</div>
@@ -97,4 +127,14 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+const mapStateToProps = state => ({
+	addresses: getAddresses(state),
+	isLoading: getIsLoading(state),
+	error: getError(state),
+});
+const mapDispatchToProps = {fetchAddressesRequest};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(App);
