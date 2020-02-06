@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import addresses from './addresses';
+import auth from './auth';
 
 export default combineReducers({
-	addresses,
+	auth,
 });
