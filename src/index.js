@@ -6,7 +6,7 @@ import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-import createStore from './store';
+import createStore from './createStore';
 
 const store = createStore();
 

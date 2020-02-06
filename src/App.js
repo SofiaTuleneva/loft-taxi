@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
+import {paths} from './constants/Paths';
 
 // Styles
 import './scss/App.scss';
@@ -15,6 +16,7 @@ import Map from './components/Map';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
 
+
 class App extends PureComponent {
 	render() {
 		return (
@@ -22,11 +24,11 @@ class App extends PureComponent {
 				<ThemeProvider theme={theme}>
 					<>
 						<Switch>
-							<PrivateRoute exact path="/map" component={Map}/>
-							<PrivateRoute exact path="/profile" component={Profile}/>
-							<Route path="/login" component={Login}/>
-							<Route path="/signup" component={Signup}/>
-							<Redirect to="/map"/>
+							<PrivateRoute exact path={paths.map} component={Map}/>
+							<PrivateRoute exact path={paths.profile} component={Profile}/>
+							<Route path={paths.login} component={Login}/>
+							<Route path={paths.signup} component={Signup}/>
+							<Redirect to={paths.map}/>
 						</Switch>
 					</>
 

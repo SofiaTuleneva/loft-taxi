@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {fetchAuthRequest} from '../../modules/auth/actions';
 import {Link} from 'react-router-dom';
+import {paths} from '../../constants/Paths';
 
 import {
 	Button,
@@ -34,12 +35,12 @@ const LoginForm = () => {
 		})
 	};
 
-	return state.isLoggedIn ? <Redirect to="/map"/> : (
+	return state.isLoggedIn ? <Redirect to={paths.map}/> : (
 		<>
 			<form onSubmit={handleSubmit} className="login__form">
 				<h1 className="form__title">Войти</h1>
 				<div className="form__subtitle">
-					Новый пользователь? <Link to="/signup">Зарегистрируйтесь</Link>
+					Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
 				</div>
 				<div className="input__group">
 					<FormControl fullWidth>

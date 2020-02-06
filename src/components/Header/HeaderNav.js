@@ -2,6 +2,7 @@ import React from 'react';
 import {logoutAction} from "../../modules/auth/actions";
 import {useDispatch} from "react-redux";
 import {Link} from 'react-router-dom';
+import {paths} from '../../constants/Paths';
 
 const HeaderNav = () => {
 
@@ -15,8 +16,8 @@ const HeaderNav = () => {
 	return (
 		<>
 			<ul className="header__menu">
-				<li className="menu__item"><Link to="/map">Карта</Link></li>
-				<li className="menu__item"><Link to="/profile">Профиль</Link></li>
+				<li className="menu__item"><Link to={paths.map}>Карта</Link></li>
+				<li className="menu__item"><Link to={paths.profile}>Профиль</Link></li>
 				<li className="menu__item"><a href="/" onClick={handleLogout}>Выйти</a></li>
 			</ul>
 		</>
