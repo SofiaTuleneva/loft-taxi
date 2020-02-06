@@ -51,6 +51,7 @@ const LoginForm = () => {
 							   value={data.login}
 							   onChange={handleChange}
 							   inputProps={{'data-testid': 'login-field'}}
+							   required
 						/>
 					</FormControl>
 				</div>
@@ -64,6 +65,7 @@ const LoginForm = () => {
 							   value={data.password}
 							   onChange={handleChange}
 							   inputProps={{'data-testid': 'password-field'}}
+							   required
 						/>
 					</FormControl>
 				</div>
