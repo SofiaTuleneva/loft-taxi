@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import {fetchAuthRequest} from '../../modules/auth/actions';
+import {fetchLoginRequest} from '../../modules/auth/actions';
 import {Link} from 'react-router-dom';
 import {paths} from '../../constants/Paths';
 
@@ -17,13 +17,13 @@ const LoginForm = () => {
 	const state = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
-	const [data, setData] = useState({login: '', password: ''});
+	const [data, setData] = useState({email: '', password: ''});
 
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		dispatch(fetchAuthRequest({
-			login: data.login,
+		dispatch(fetchLoginRequest({
+			email: data.email,
 			password: data.password,
 		}));
 	};
@@ -44,12 +44,12 @@ const LoginForm = () => {
 				</div>
 				<div className="input__group">
 					<FormControl fullWidth>
-						<InputLabel htmlFor="login">Login:</InputLabel>
-						<Input id="login"
+						<InputLabel htmlFor="email">Email:</InputLabel>
+						<Input id="email"
 							   placeholder="Логин"
 							   type="text"
-							   name="login"
-							   value={data.login}
+							   name="email"
+							   value={data.email}
 							   onChange={handleChange}
 							   inputProps={{'data-testid': 'login-field'}}
 							   required

@@ -1,28 +1,40 @@
 import {
-	fetchAuthFailure,
-	fetchAuthRequest,
-	fetchAuthSuccess,
+	fetchLoginFailure,
+	fetchLoginRequest,
+	fetchLoginSuccess,
 	logoutAction,
+
+	fetchSignupRequest,
+	fetchSignupSuccess,
+	fetchSignupFailure,
 } from "./actions";
 
 import {handleActions} from 'redux-actions';
 import {combineReducers} from "redux";
 
 const isLoggedIn = handleActions({
-	[fetchAuthSuccess]: () => true,
-	// [fetchAuthSuccess]: (state, action) => action.payload.success,
+	[fetchLoginSuccess]: (state, action) => action.payload.success,
 	[logoutAction]: () => false,
+
+	[fetchSignupSuccess]: (state, action) => action.payload.success,
 }, false);
 
 const pending = handleActions({
-	[fetchAuthRequest]: () => true,
-	[fetchAuthSuccess]: () => false,
-	[fetchAuthFailure]: () => false,
+	[fetchLoginRequest]: () => true,
+	[fetchLoginSuccess]: () => false,
+	[fetchLoginFailure]: () => false,
+
+	[fetchSignupRequest]: () => true,
+	[fetchSignupSuccess]: () => false,
+	[fetchSignupFailure]: () => false,
 }, false);
 
 const error = handleActions({
-	[fetchAuthFailure]: (state, action) => action.payload,
-	[fetchAuthRequest]: () => null,
+	[fetchLoginFailure]: (state, action) => action.payload,
+	[fetchLoginRequest]: () => null,
+
+	[fetchSignupFailure]: (state, action) => action.payload,
+	[fetchSignupRequest]: () => null,
 }, null);
 
 export default combineReducers({

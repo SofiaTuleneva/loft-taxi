@@ -1,12 +1,20 @@
 import {createAction} from 'redux-actions';
 import {
-	AUTH_REQUEST as auth,
-	AUTH_SUCCESS as success,
-	AUTH_FAILURE as failure,
-	AUTH_LOGOUT as logout,
+	LOGIN_REQUEST as login,
+	LOGIN_SUCCESS as loginSuccess,
+	LOGIN_FAILURE as loginFailure,
+	LOGIN_LOGOUT as logout,
+
+	SIGNUP_REQUEST as signup,
+	SIGNUP_SUCCESS as signupSuccess,
+	SIGNUP_FAILURE as signupFailure,
 } from './types';
 
-export const fetchAuthRequest = createAction(auth);
-export const fetchAuthSuccess = createAction(success);
-export const fetchAuthFailure = createAction(failure);
+export const fetchLoginRequest = createAction(login);
+export const fetchLoginSuccess = createAction(loginSuccess);
+export const fetchLoginFailure = createAction(loginFailure);
 export const logoutAction = createAction(logout);
+
+export const fetchSignupRequest = createAction(signup);
+export const fetchSignupSuccess = createAction(signupSuccess);
+export const fetchSignupFailure = createAction(signupFailure);
