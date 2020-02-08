@@ -19,6 +19,13 @@ const isLoggedIn = handleActions({
 	[fetchSignupSuccess]: (state, action) => action.payload.success,
 }, false);
 
+const token = handleActions({
+	[fetchLoginSuccess]: (state, action) => action.payload.token,
+	[logoutAction]: () => '',
+
+	[fetchSignupSuccess]: (state, action) => action.payload.token,
+}, '');
+
 const pending = handleActions({
 	[fetchLoginRequest]: () => true,
 	[fetchLoginSuccess]: () => false,
@@ -41,4 +48,5 @@ export default combineReducers({
 	isLoggedIn,
 	pending,
 	error,
+	token,
 });
