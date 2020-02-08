@@ -1,15 +1,19 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import rootReducer from './modules';
-import {authMiddleware, signupMiddleware} from './modules/auth';
+import {loginMiddleware, signupMiddleware} from './modules/auth';
 import {profileMiddleware} from './modules/profile';
+import {getStateFromStorage} from "./LocalStorage";
+
+const initialState = getStateFromStorage();
 
 const createAppStore = () => {
 	const store = createStore(
 		rootReducer,
+		initialState,
 		compose(
-            applyMiddleware(authMiddleware),
-            applyMiddleware(signupMiddleware),
-            applyMiddleware(profileMiddleware),
+			applyMiddleware(loginMiddleware),
+			applyMiddleware(signupMiddleware),
+			applyMiddleware(profileMiddleware),
 			window.__REDUX_DEVTOOLS_EXTENSION__
 				? window.__REDUX_DEVTOOLS_EXTENSION__()
 				: noop => noop,
@@ -20,11 +24,3 @@ const createAppStore = () => {
 };
 
 export default createAppStore;
-
-// state0 ->  reducers -> state1
-//              ↑
-//            middleware1
-//              ↑
-//            middleware0
-//              ↑
-// action ->  store

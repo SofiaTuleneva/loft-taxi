@@ -5,10 +5,15 @@ import {Provider} from 'react-redux';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-
 import createStore from './createStore';
+import {saveStorage} from "./LocalStorage";
 
 const store = createStore();
+
+store.subscribe(() => {
+		saveStorage(store.getState())
+	}
+);
 
 render(
 	<Provider store={store}>

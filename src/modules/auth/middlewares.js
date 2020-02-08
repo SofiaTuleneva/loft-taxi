@@ -8,7 +8,7 @@ import {
 	fetchSignupFailure,
 } from "./actions";
 
-export const authMiddleware = store => next => action => {
+export const loginMiddleware = store => next => action => {
 	if (action.type === LOGIN_REQUEST) {
 		fetch(`https://loft-taxi.glitch.me/auth`, {
 			method: 'POST',

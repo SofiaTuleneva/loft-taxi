@@ -18,9 +18,6 @@ import Signup from './components/Signup';
 import {useSelector} from "react-redux";
 
 const App = () => {
-	const state = useSelector(state => state);
-	console.log(state);
-
 	return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
