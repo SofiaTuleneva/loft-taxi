@@ -1,18 +1,13 @@
 import React from 'react';
-import Header from '../Header';
+import ProfileForm from './ProfileForm';
+import AuthWrapper from "../Shared/AuthWrapper";
 
 const Profile = () => {
 	return (
-		<>
-			<Header/>
-			<div className="Profile">
-				<div className="container">
-					<div className="contentbox">
-						<h1>Профиль</h1>
-					</div>
-				</div>
-			</div>
-		</>);
+		<AuthWrapper>
+			<ProfileForm/>
+		</AuthWrapper>
+	);
 };
 
 export default Profile;

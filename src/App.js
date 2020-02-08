@@ -15,20 +15,22 @@ import Login from './components/Login';
 import Map from './components/Map';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
+import {useSelector} from "react-redux";
 
 const App = () => {
+	const state = useSelector(state => state);
+	console.log(state);
+
 	return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
-				<>
-					<Switch>
-						<PrivateRoute exact path={paths.map} component={Map}/>
-						<PrivateRoute exact path={paths.profile} component={Profile}/>
-						<Route path={paths.login} component={Login}/>
-						<Route path={paths.signup} component={Signup}/>
-						<Redirect to={paths.map}/>
-					</Switch>
-				</>
+				<Switch>
+					<PrivateRoute exact path={paths.map} component={Map}/>
+					<PrivateRoute exact path={paths.profile} component={Profile}/>
+					<Route path={paths.login} component={Login}/>
+					<Route path={paths.signup} component={Signup}/>
+					<Redirect to={paths.map}/>
+				</Switch>
 			</ThemeProvider>
 		</div>
 	);
