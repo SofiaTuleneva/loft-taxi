@@ -1,12 +1,13 @@
 import React from 'react';
 import ProfileForm from './ProfileForm';
-import AuthWrapper from "../Shared/AuthWrapper";
+import Header from "../Header";
 
 const Profile = () => {
 	return (
-		<AuthWrapper>
+		<>
+			<Header/>
 			<ProfileForm/>
-		</AuthWrapper>
+		</>
 	);
 };
 
