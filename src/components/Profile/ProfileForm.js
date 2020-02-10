@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchProfileRequest} from '../../modules/profile/actions';
+import {fetchProfileRequest, fetchProfileGet} from '../../modules/profile/actions';
 import {
 	Button, FormControl, Input, InputLabel
 } from '@material-ui/core';
@@ -9,13 +9,20 @@ const ProfileForm = () => {
 
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
+	const {cardNumber, expiryDate, cardName, cvc} = state.profile.data;
 
 	const [data, setData] = useState({
-		cardNumber: '',
-		expiryDate: '',
-		cardName: '',
-		cvc: '',
+		cardNumber,
+		expiryDate,
+		cardName,
+		cvc,
 	});
+
+	useEffect(() => {
+		dispatch(fetchProfileGet({
+			token: state.auth.token,
+		}));
+	}, []);
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -55,6 +62,7 @@ const ProfileForm = () => {
 												   placeholder="Логин"
 												   type="text"
 												   name="cardNumber"
+												   defaultValue={cardNumber}
 												   onChange={handleChange}
 												   required
 											/>
@@ -67,6 +75,7 @@ const ProfileForm = () => {
 												   placeholder="Логин"
 												   type="text"
 												   name="expiryDate"
+												   defaultValue={expiryDate}
 												   onChange={handleChange}
 												   required
 											/>
@@ -78,9 +87,10 @@ const ProfileForm = () => {
 										<FormControl fullWidth>
 											<InputLabel htmlFor="cardName">Имя владельца*</InputLabel>
 											<Input id="cardName"
-												   placeholder="Логин"
+												   placeholder="NAME"
 												   type="text"
 												   name="cardName"
+												   defaultValue={cardName}
 												   onChange={handleChange}
 												   required
 											/>
@@ -90,9 +100,10 @@ const ProfileForm = () => {
 										<FormControl fullWidth>
 											<InputLabel htmlFor="cvc">CVC*</InputLabel>
 											<Input id="cvc"
-												   placeholder="Логин"
+												   placeholder="123"
 												   type="text"
 												   name="cvc"
+												   defaultValue={cvc}
 												   onChange={handleChange}
 												   required
 											/>

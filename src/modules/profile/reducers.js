@@ -7,8 +7,8 @@ import {
 import {handleActions} from 'redux-actions';
 import {combineReducers} from "redux";
 
-const isSaved = handleActions({
-	[fetchProfileSuccess]: (state, action) => action.payload.success,
+const data = handleActions({
+	[fetchProfileSuccess]: (state, action) => action.payload,
 }, false);
 
 const pending = handleActions({
@@ -23,7 +23,7 @@ const error = handleActions({
 }, null);
 
 export default combineReducers({
-	isSaved,
+	data,
 	pending,
 	error,
 });

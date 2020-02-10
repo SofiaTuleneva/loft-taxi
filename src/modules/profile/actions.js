@@ -1,10 +1,12 @@
 import {createAction} from 'redux-actions';
 import {
-	PROFILE_REQUEST as profile,
-	PROFILE_SUCCESS as profileSuccess,
-	PROFILE_FAILURE as profileFailure,
+	PROFILE_SAVE,
+	PROFILE_GET,
+	PROFILE_SUCCESS,
+	PROFILE_FAILURE,
 } from './types';
 
-export const fetchProfileRequest = createAction(profile);
-export const fetchProfileSuccess = createAction(profileSuccess);
-export const fetchProfileFailure = createAction(profileFailure);
+export const fetchProfileRequest = createAction(PROFILE_SAVE);
+export const fetchProfileGet = createAction(PROFILE_GET);
+export const fetchProfileSuccess = createAction(PROFILE_SUCCESS);
+export const fetchProfileFailure = createAction(PROFILE_FAILURE);
