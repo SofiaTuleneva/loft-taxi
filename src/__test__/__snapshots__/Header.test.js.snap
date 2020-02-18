@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<header
+  className="header"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="header__line"
+    >
+      <div
+        className="header__logo"
+      >
+        <img
+          alt="logo"
+          className="header__pic"
+          src="logo.svg"
+          width="156"
+        />
+      </div>
+      <div
+        className="header__menu"
+      >
+        <button
+          className="menu__item"
+          onClick={[Function]}
+        >
+          Выйти
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+`;
