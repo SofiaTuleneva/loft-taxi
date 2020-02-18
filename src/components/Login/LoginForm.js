@@ -1,5 +1,9 @@
-import React, {useState, useCallback, useContext} from 'react';
-import UserContext from "../../context/UserContext";
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import {fetchLoginRequest} from '../../modules/auth/actions';
+import {Link} from 'react-router-dom';
+import {paths} from '../../constants/Paths';
 
 import {
 	Button,
@@ -10,52 +14,45 @@ import {
 
 const LoginForm = () => {
 
-	const [login, setLogin] = useState("");
-	const [password, setPassword] = useState("");
-	const [isError, setError] = useState(false);
+	const state = useSelector(state => state.auth);
+	const dispatch = useDispatch();
 
-	// Context
-	const user = useContext(UserContext);
+	const [data, setData] = useState({email: '', password: ''});
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		if (login && password) {
-			if (user) user.login(login, password);
-		} else {
-			setError(true);
-			// alert('Введите пароль или логин!')
-		}
+
+		dispatch(fetchLoginRequest({
+			email: data.email,
+			password: data.password,
+		}));
 	};
 
-	const handleChange = useCallback(
-		({target}) => {
-			setError(false);
-			if (target.name === "login") {
-				setLogin(target.value);
-			} else {
-				setPassword(target.value);
-			}
-		},
-		[setLogin, setPassword]
-	);
+	const handleChange = ({target}) => {
+		setData({
+			...data,
+			[target.name]: target.value,
+		})
+	};
 
-	return (
-		<div>
+	return state.isLoggedIn ? <Redirect to={paths.map}/> : (
+		<>
 			<form onSubmit={handleSubmit} className="login__form">
 				<h1 className="form__title">Войти</h1>
 				<div className="form__subtitle">
-					Новый пользователь? <a href="/" className="form__link">Зарегистрируйтесь</a>
+					Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
 				</div>
 				<div className="input__group">
 					<FormControl fullWidth>
-						<InputLabel htmlFor="login">Login:</InputLabel>
-						<Input id="login"
+						<InputLabel htmlFor="email">Email:</InputLabel>
+						<Input id="email"
 							   placeholder="Логин"
 							   type="text"
-							   name="login"
-							   value={login}
+							   name="email"
+							   value={data.email}
 							   onChange={handleChange}
 							   inputProps={{'data-testid': 'login-field'}}
+							   required
 						/>
 					</FormControl>
 				</div>
@@ -66,20 +63,23 @@ const LoginForm = () => {
 							   placeholder="Пароль"
 							   type="password"
 							   name="password"
-							   value={password}
+							   value={data.password}
 							   onChange={handleChange}
 							   inputProps={{'data-testid': 'password-field'}}
+							   required
 						/>
 					</FormControl>
 				</div>
-				{isError ? <p data-testid="error-message">Введите логин и пароль!</p>: ''}
 				<div className="button__group">
-					<Button type="submit" data-testid="submit-button" variant="contained" color="primary">
+					<Button type="submit" disabled={state.pending} data-testid="submit-button" variant="contained" color="primary">
 						Войти
 					</Button>
+					<div className="pending">
+						{state.pending ? ' Загрузка...' : null}
+					</div>
 				</div>
 			</form>
-		</div>
+		</>
 	);
 };
 

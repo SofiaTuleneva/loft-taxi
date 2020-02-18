@@ -1,52 +1,18 @@
-import React, {useContext} from 'react';
-import PropTypes from 'prop-types'
-import UserContext from "../../context/UserContext";
+import React from 'react';
 import HeaderLogo from "./HeaderLogo";
-import HeaderMenuItem from "./HeaderMenuItem";
+import HeaderNav from "./HeaderNav";
 
-const Header = ({pages, setPage}) => {
-
-	// Context
-	const user = useContext(UserContext);
-
-	const handleMenuClick = (e, activePageId) => {
-		e.preventDefault();
-		setPage(activePageId)
-	};
-
-	const handleLogout = e => {
-		e.preventDefault();
-		user.logout();
-	};
-
-	const pagesFiltered = pages.filter(
-		({showInMenu}) => showInMenu === user.isLoggedIn
-	);
-
+const Header = () => {
 	return (
 		<header className="header">
 			<div className="container">
 				<div className="header__line">
 					<HeaderLogo/>
-					<div className="header__menu">
-						{pagesFiltered.map(({id, text}) => (
-							<HeaderMenuItem
-								key={id}
-								text={text}
-								handleClick={e => handleMenuClick(e, id)}
-							/>
-						))}
-						<button onClick={handleLogout} className="menu__item">Выйти</button>
-					</div>
+					<HeaderNav/>
 				</div>
 			</div>
 		</header>
 	);
-};
-
-Header.propTypes = {
-	pages: PropTypes.array.isRequired,
-	setPage: PropTypes.func.isRequired,
 };
 
 export default Header;

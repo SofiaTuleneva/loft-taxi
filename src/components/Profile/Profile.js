@@ -1,15 +1,14 @@
 import React from 'react';
+import ProfileForm from './ProfileForm';
+import Header from "../Header";
 
 const Profile = () => {
-  return (
-    <div className="Profile">
-        <div className="container">
-            <div className="contentbox">
-                <h1>Профиль</h1>
-            </div>
-        </div>
-    </div>
-  );
+	return (
+		<>
+			<Header/>
+			<ProfileForm/>
+		</>
+	);
 };
 
 export default Profile;

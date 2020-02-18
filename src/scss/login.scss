@@ -20,6 +20,7 @@
 }
 
 .login__form {
+    position: relative;
     background-color: $white;
     padding: 65px 50px;
     border-radius: 5px;
@@ -78,4 +79,109 @@
     font-size: 16px;
     padding: 10px 30px;
     border-radius: 5px;
+}
+
+.pending {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.bg-container {
+    height: 100vh;
+    background: url('../img/bg.jpg') no-repeat 50% 50% /cover;
+}
+
+.profile__content {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.form {
+    background-color: $white;
+    padding: 65px 50px;
+    border-radius: 5px;
+    &--profile {
+        text-align: center;
+        .form__subtitle {
+            margin-top: 10px;
+        }
+        .form__input {
+            font-size: 24px;
+        }
+        .form__btn {
+            margin: 0 auto;
+            margin-top: 35px;
+        }
+    }
+}
+
+.form__panels {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form__panel {
+    flex: 0 0 48%;
+    box-shadow: 0px 6px 20px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 35px 30px 30px 30px;
+    position: relative;
+    .input__group {
+        margin-top: 35px;
+
+        &:first-child {
+            margin-top: 10px;
+        }
+    }
+}
+
+.mc-logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.input__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.input__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input__block {
+    flex: 0 0 48%;
+}
+
+.form__subtitle {
+    margin: 30px 0;
+    font-size: 16px;
+    color: $darkgrey;
+
+    a {
+        text-decoration: none;
+        color: $blue;
+    }
+}
+
+.input__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
 }
