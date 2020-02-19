@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchProfileRequest, fetchProfileGet} from '../../modules/profile/actions';
+import {fetchProfileRequest} from '../../modules/profile/actions';
 import {
 	Button, FormControl, InputLabel
 } from '@material-ui/core';
@@ -9,19 +9,14 @@ const ProfileForm = () => {
 
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
+	const {cardNumber, expiryDate, cardName, cvc} = state.profile.data;
 
 	const [data, setData] = useState({
-		cardNumber: '',
-		expiryDate: '',
-		cardName: '',
-		cvc: '',
+		cardNumber,
+		expiryDate,
+		cardName,
+		cvc,
 	});
-
-	useEffect(() => {
-		dispatch(fetchProfileGet({
-			token: state.auth.token,
-		}));
-	}, []);
 
 	useEffect(() => {
 		setData(state.profile.data);

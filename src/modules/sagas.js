@@ -1,4 +1,4 @@
-import {fork, call, put, take, takeEvery} from "redux-saga/effects";
+import {fork, call, put, take} from "redux-saga/effects";
 
 import {
 	fetchLoginRequest,
@@ -16,8 +16,10 @@ import {
 	fetchProfileGet,
 } from "./profile/actions";
 
+const PATH = 'https://loft-taxi.glitch.me';
+
 const loginRequest = data =>
-	fetch(`https://loft-taxi.glitch.me/auth`, {
+	fetch(`${PATH}/auth`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -26,7 +28,7 @@ const loginRequest = data =>
 	}).then(response => response.json());
 
 const signupRequest = data =>
-	fetch(`https://loft-taxi.glitch.me/register`, {
+	fetch(`${PATH}/register`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -35,7 +37,7 @@ const signupRequest = data =>
 	}).then(response => response.json());
 
 const profileRequest = data =>
-	fetch("https://loft-taxi.glitch.me/card", {
+	fetch(`${PATH}/card`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -44,7 +46,7 @@ const profileRequest = data =>
 	}).then(response => response.json());
 
 const profileGet = token =>
-	fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
+	fetch(`${PATH}/card?token=${token}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"

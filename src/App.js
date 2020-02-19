@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import {paths} from './constants/Paths';
@@ -15,9 +15,21 @@ import Login from './components/Login';
 import Map from './components/Map';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchProfileGet} from "./modules/profile";
 
 const App = () => {
+	const state = useSelector(state => state);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (state.auth.isLoggedIn) {
+			dispatch(fetchProfileGet({
+				token: state.auth.token,
+			}));
+		}
+	}, []);
+
 	return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
