@@ -2,20 +2,19 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchProfileRequest, fetchProfileGet} from '../../modules/profile/actions';
 import {
-	Button, FormControl, Input, InputLabel
+	Button, FormControl, InputLabel
 } from '@material-ui/core';
 
 const ProfileForm = () => {
 
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
-	const {cardNumber, expiryDate, cardName, cvc} = state.profile.data;
 
 	const [data, setData] = useState({
-		cardNumber,
-		expiryDate,
-		cardName,
-		cvc,
+		cardNumber: '',
+		expiryDate: '',
+		cardName: '',
+		cvc: '',
 	});
 
 	useEffect(() => {
@@ -23,6 +22,10 @@ const ProfileForm = () => {
 			token: state.auth.token,
 		}));
 	}, []);
+
+	useEffect(() => {
+		setData(state.profile.data);
+	}, [state.profile.data]);
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -58,11 +61,11 @@ const ProfileForm = () => {
 									<div className="input__group">
 										<FormControl fullWidth>
 											<InputLabel htmlFor="cardNumber">Номер карты*</InputLabel>
-											<Input id="cardNumber"
-												   placeholder="Логин"
+											<input id="cardNumber"
+												   placeholder="Номер карты"
 												   type="text"
 												   name="cardNumber"
-												   defaultValue={cardNumber}
+												   defaultValue={data.cardNumber}
 												   onChange={handleChange}
 												   required
 											/>
@@ -71,11 +74,11 @@ const ProfileForm = () => {
 									<div className="input__group">
 										<FormControl fullWidth>
 											<InputLabel htmlFor="expiryDate">Срок действия*</InputLabel>
-											<Input id="expiryDate"
-												   placeholder="Логин"
+											<input id="expiryDate"
+												   placeholder="Срок действия"
 												   type="text"
 												   name="expiryDate"
-												   defaultValue={expiryDate}
+												   defaultValue={data.expiryDate}
 												   onChange={handleChange}
 												   required
 											/>
@@ -86,11 +89,11 @@ const ProfileForm = () => {
 									<div className="input__group">
 										<FormControl fullWidth>
 											<InputLabel htmlFor="cardName">Имя владельца*</InputLabel>
-											<Input id="cardName"
-												   placeholder="NAME"
+											<input id="cardName"
+												   placeholder="Имя владельца"
 												   type="text"
 												   name="cardName"
-												   defaultValue={cardName}
+												   defaultValue={data.cardName}
 												   onChange={handleChange}
 												   required
 											/>
@@ -99,11 +102,11 @@ const ProfileForm = () => {
 									<div className="input__group">
 										<FormControl fullWidth>
 											<InputLabel htmlFor="cvc">CVC*</InputLabel>
-											<Input id="cvc"
-												   placeholder="123"
+											<input id="cvc"
+												   placeholder="CVC"
 												   type="text"
 												   name="cvc"
-												   defaultValue={cvc}
+												   defaultValue={data.cvc}
 												   onChange={handleChange}
 												   required
 											/>

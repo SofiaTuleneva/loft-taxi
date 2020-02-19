@@ -1,9 +1,12 @@
 import {createStore, compose, applyMiddleware} from 'redux';
+
+import createSagaMiddleWare from 'redux-saga';
+import {rootSagas} from './modules/sagas';
 import rootReducer from './modules';
-import {loginMiddleware, signupMiddleware} from './modules/auth';
-import {profileGetMiddleware, profileSaveMiddleware} from './modules/profile';
+
 import {getStateFromStorage} from "./LocalStorage";
 
+const sagaMiddleware = createSagaMiddleWare();
 const initialState = getStateFromStorage();
 
 const createAppStore = () => {
@@ -11,15 +14,14 @@ const createAppStore = () => {
 		rootReducer,
 		initialState,
 		compose(
-			applyMiddleware(loginMiddleware),
-			applyMiddleware(signupMiddleware),
-			applyMiddleware(profileGetMiddleware),
-			applyMiddleware(profileSaveMiddleware),
+			applyMiddleware(sagaMiddleware),
 			window.__REDUX_DEVTOOLS_EXTENSION__
 				? window.__REDUX_DEVTOOLS_EXTENSION__()
 				: noop => noop,
 		),
 	);
+
+	sagaMiddleware.run(rootSagas);
 
 	return store;
 };

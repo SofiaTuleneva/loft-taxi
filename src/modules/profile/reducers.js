@@ -9,7 +9,7 @@ import {combineReducers} from "redux";
 
 const data = handleActions({
 	[fetchProfileSuccess]: (state, action) => action.payload,
-}, false);
+}, '');
 
 const pending = handleActions({
 	[fetchProfileRequest]: () => true,
