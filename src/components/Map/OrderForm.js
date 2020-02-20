@@ -10,6 +10,7 @@ const OrderForm = () => {
 	// Local state
 	const [addressOne, setAddressOne] = useState(null);
 	const [addressTwo, setAddressTwo] = useState(null);
+	const [orderIsReady, setOrderIsReady] = useState(false);
 
 	// Options
 	const options = addresses.map(option => ({value: option, label: option}));
@@ -41,36 +42,49 @@ const OrderForm = () => {
 				addressTwo
 			})
 		);
+		setOrderIsReady(true);
 	};
 
 	return (
 		<>
-			<form action="/" method="" onSubmit={handleSubmit}>
-				<div className="address__group">
-					<Select
-						options={filteredOptions}
-						onChange={handleChangeAddressOne}
-						className="address__input"
-						placeholder="Откуда"
-						isClearable
-						isSearchable
+			{orderIsReady ? (
+				<>
+					<h1>Заказ размещён</h1>
+					<p className="panel__subtext">
+						Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
+					</p>
+					<button className="form__btn">
+						Сделать новый заказ
+					</button>
+				</>
+			) : (
+				<form action="/" method="" onSubmit={handleSubmit}>
+					<div className="address__group">
+						<Select
+							options={filteredOptions}
+							onChange={handleChangeAddressOne}
+							className="address__input"
+							placeholder="Откуда"
+							isClearable
+							isSearchable
+						/>
+						<Select
+							options={filteredOptions}
+							onChange={handleChangeAddressTwo}
+							className="address__input"
+							placeholder="Куда"
+							isClearable
+							isSearchable
+						/>
+					</div>
+					<input
+						type="submit"
+						className="form__btn"
+						value="Вызвать такси"
+						disabled={!addressOne || !addressTwo}
 					/>
-					<Select
-						options={filteredOptions}
-						onChange={handleChangeAddressTwo}
-						className="address__input"
-						placeholder="Куда"
-						isClearable
-						isSearchable
-					/>
-				</div>
-				<input
-					type="submit"
-					className="form__btn"
-					value="Вызвать такси"
-					disabled={!addressOne || !addressTwo}
-				/>
-			</form>
+				</form>
+			)}
 		</>
 	);
 };
