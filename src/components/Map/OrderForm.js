@@ -68,6 +68,7 @@ const OrderForm = () => {
 					type="submit"
 					className="form__btn"
 					value="Вызвать такси"
+					disabled={!addressOne || !addressTwo}
 				/>
 			</form>
 		</>
