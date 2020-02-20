@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchProfileRequest} from '../../modules/profile/actions';
+import {useHistory} from "react-router-dom";
+import {paths} from "../../constants/Paths";
 import {
 	Button, FormControl, InputLabel
 } from '@material-ui/core';
@@ -9,6 +11,7 @@ const ProfileForm = () => {
 
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const {cardNumber, expiryDate, cardName, cvc} = state.profile.data;
 
 	const [data, setData] = useState({
@@ -23,8 +26,6 @@ const ProfileForm = () => {
 	}, [state.profile.data]);
 
 	const handleSubmit = e => {
-		e.preventDefault();
-
 		dispatch(fetchProfileRequest({
 			cardNumber: data.cardNumber,
 			expiryDate: data.expiryDate,
@@ -32,6 +33,8 @@ const ProfileForm = () => {
 			cvc: data.cvc,
 			token: state.auth.token,
 		}));
+
+		history.push(paths.map);
 	};
 
 	const handleChange = ({target}) => {

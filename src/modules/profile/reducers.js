@@ -2,6 +2,7 @@ import {
 	fetchProfileFailure,
 	fetchProfileRequest,
 	fetchProfileSuccess,
+	fetchProfileGet,
 } from "./actions";
 
 import {handleActions} from 'redux-actions';
@@ -9,10 +10,11 @@ import {combineReducers} from "redux";
 
 const data = handleActions({
 	[fetchProfileSuccess]: (state, action) => action.payload,
-}, '');
+}, false);
 
 const pending = handleActions({
 	[fetchProfileRequest]: () => true,
+	[fetchProfileGet]: () => true,
 	[fetchProfileSuccess]: () => false,
 	[fetchProfileFailure]: () => false,
 }, false);

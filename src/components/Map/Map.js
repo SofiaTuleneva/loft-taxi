@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from "react";
 import mapboxgl from "mapbox-gl";
 import {mapboxToken} from "../../constants/Tokens";
 import Header from '../Header';
+import OrderPanel from "./OrderPanel";
 
 const Map = () => {
 	const mapRef = useRef();
@@ -19,6 +20,7 @@ const Map = () => {
 	return (
 		<>
 			<Header/>
+			<OrderPanel />
 			<div className="mapbox" ref={mapRef}/>
 		</>);
 };
