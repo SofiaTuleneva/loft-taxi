@@ -2,6 +2,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {Link, useHistory} from 'react-router-dom';
 import {paths} from "../../constants/Paths";
+import OrderForm from "./OrderForm";
 
 const OrderPanel = () => {
 	const state = useSelector(state => state);
@@ -16,7 +17,7 @@ const OrderPanel = () => {
 			{state.profile.data.cardNumber ?
 				<div className="container">
 					<div className="map__panel">
-						Выбор маршрута
+						<OrderForm/>
 					</div>
 				</div>
 				:
