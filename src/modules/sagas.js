@@ -147,7 +147,7 @@ function* routeSaga() {
 		const action = yield take(fetchRouteRequest);
 		try {
 			const result = yield call(routeRequest, action.payload);
-			yield put(fetchRouteSuccess(result));
+			yield put(fetchRouteSuccess({status: true, coordinates: result}));
 		} catch (e) {
 			yield put(fetchRouteFailure(e));
 		}

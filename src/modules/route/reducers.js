@@ -21,7 +21,10 @@ const route = handleActions(
 	{
 		[fetchRouteSuccess]: (state, action) => action.payload,
 	},
-	null
+	{
+		status: false,
+		coordinates: null
+	}
 );
 
 const pending = handleActions({
