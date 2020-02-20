@@ -9,7 +9,7 @@ import {drawRoute} from "./DrawRoute";
 const Map = () => {
 	const mapRef = useRef();
 	mapboxgl.accessToken = mapboxToken;
-	const route = useSelector(state => state.route.route);
+	const route = useSelector(state => state.map.route);
 
 	useEffect(() => {
 		const map = new mapboxgl.Map({

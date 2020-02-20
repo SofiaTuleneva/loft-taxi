@@ -1,11 +1,11 @@
 import React, {useState, useCallback} from "react";
 import Select from "react-select";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchRouteRequest} from "../../modules/route/actions";
+import {fetchRouteRequest} from "../../modules/map/actions";
 
 const OrderForm = () => {
 	const dispatch = useDispatch();
-	const addresses = useSelector(state => state.route.addresses.addresses);
+	const addresses = useSelector(state => state.map.addresses.addresses);
 
 	// Local state
 	const [addressOne, setAddressOne] = useState(null);

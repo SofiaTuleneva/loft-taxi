@@ -23,7 +23,7 @@ import {
 	fetchRouteRequest,
 	fetchRouteSuccess,
 	fetchRouteFailure,
-} from "./route/actions";
+} from "./map/actions";
 
 // Requests
 
@@ -36,7 +36,8 @@ const loginRequest = data =>
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(data),
-	}).then(response => response.json());
+	})
+		.then(response => response.json());
 
 const signupRequest = data =>
 	fetch(`${PATH}/register`, {
@@ -45,7 +46,8 @@ const signupRequest = data =>
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(data),
-	}).then(response => response.json());
+	})
+		.then(response => response.json());
 
 const profileRequest = data =>
 	fetch(`${PATH}/card`, {
@@ -54,7 +56,8 @@ const profileRequest = data =>
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(data),
-	}).then(response => response.json());
+	})
+		.then(response => response.json());
 
 const profileGet = token =>
 	fetch(`${PATH}/card?token=${token}`, {
@@ -131,7 +134,7 @@ function* profileGetSaga() {
 	}
 }
 
-function* addressListGetSaga() {
+function* addressesGetSaga() {
 	yield takeEvery(fetchAddressRequest, function* () {
 		try {
 			const result = yield call(addressListGet);
@@ -142,7 +145,7 @@ function* addressListGetSaga() {
 	});
 }
 
-function* routeSaga() {
+function* routeRequestSaga() {
 	while (true) {
 		const action = yield take(fetchRouteRequest);
 		try {
@@ -159,6 +162,6 @@ export function* rootSagas() {
 	yield fork(loginSaga);
 	yield fork(profileRequestSaga);
 	yield fork(profileGetSaga);
-	yield fork(addressListGetSaga);
-	yield fork(routeSaga);
+	yield fork(addressesGetSaga);
+	yield fork(routeRequestSaga);
 }

@@ -17,7 +17,7 @@ import Profile from './components/Profile';
 import Signup from './components/Signup';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProfileGet} from "./modules/profile";
-import {fetchAddressRequest} from "./modules/route";
+import {fetchAddressRequest} from "./modules/map";
 
 const App = () => {
 	const state = useSelector(state => state);

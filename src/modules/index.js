@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import auth from './auth';
 import profile from './profile';
-import route from './route';
+import map from './map';
 
 export default combineReducers({
 	auth,
 	profile,
-	route,
+	map,
 });
