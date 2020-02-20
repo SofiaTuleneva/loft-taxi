@@ -1,4 +1,4 @@
-import {fork, call, put, take} from "redux-saga/effects";
+import {fork, call, put, take, takeEvery} from "redux-saga/effects";
 
 import {
 	fetchLoginRequest,
@@ -15,6 +15,12 @@ import {
 	fetchProfileFailure,
 	fetchProfileGet,
 } from "./profile/actions";
+
+import {
+	fetchAddressRequest,
+	fetchAddressSuccess,
+	fetchAddressFailure,
+} from "./route/actions";
 
 const PATH = 'https://loft-taxi.glitch.me';
 
@@ -51,7 +57,12 @@ const profileGet = token =>
 		headers: {
 			"Content-Type": "application/json"
 		},
-	}).then(response => response.json());
+	})
+		.then(response => response.json());
+
+const addressListGet = () =>
+	fetch(`${PATH}/addressList`)
+		.then(response => response.json());
 
 
 // Sagas
@@ -113,9 +124,21 @@ function* profileGetSaga() {
 	}
 }
 
+function* addressListGetSaga() {
+	yield takeEvery(fetchAddressRequest, function*() {
+		try {
+			const result = yield call(addressListGet);
+			yield put(fetchAddressSuccess(result));
+		} catch (e) {
+			yield put(fetchAddressFailure(e));
+		}
+	});
+}
+
 export function* rootSagas() {
 	yield fork(signupSaga);
 	yield fork(loginSaga);
 	yield fork(profileRequestSaga);
 	yield fork(profileGetSaga);
+	yield fork(addressListGetSaga);
 }

@@ -17,6 +17,7 @@ import Profile from './components/Profile';
 import Signup from './components/Signup';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProfileGet} from "./modules/profile";
+import {fetchAddressRequest} from "./modules/route";
 
 const App = () => {
 	const state = useSelector(state => state);
@@ -24,6 +25,7 @@ const App = () => {
 
 	useEffect(() => {
 		if (state.auth.isLoggedIn) {
+			dispatch(fetchAddressRequest());
 			dispatch(fetchProfileGet({
 				token: state.auth.token,
 			}));
