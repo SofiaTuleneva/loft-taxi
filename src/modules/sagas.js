@@ -20,7 +20,12 @@ import {
 	fetchAddressRequest,
 	fetchAddressSuccess,
 	fetchAddressFailure,
+	fetchRouteRequest,
+	fetchRouteSuccess,
+	fetchRouteFailure,
 } from "./route/actions";
+
+// Requests
 
 const PATH = 'https://loft-taxi.glitch.me';
 
@@ -64,11 +69,13 @@ const addressListGet = () =>
 	fetch(`${PATH}/addressList`)
 		.then(response => response.json());
 
+const routeRequest = data =>
+	fetch(`${PATH}/route?address1=${data.addressOne}&address2=${data.addressTwo}`)
+		.then(response => response.json());
 
 // Sagas
 
 function* loginSaga() {
-
 	while (true) {
 		const action = yield take(fetchLoginRequest);
 		try {
@@ -125,7 +132,7 @@ function* profileGetSaga() {
 }
 
 function* addressListGetSaga() {
-	yield takeEvery(fetchAddressRequest, function*() {
+	yield takeEvery(fetchAddressRequest, function* () {
 		try {
 			const result = yield call(addressListGet);
 			yield put(fetchAddressSuccess(result));
@@ -135,10 +142,23 @@ function* addressListGetSaga() {
 	});
 }
 
+function* routeSaga() {
+	while (true) {
+		const action = yield take(fetchRouteRequest);
+		try {
+			const result = yield call(routeRequest, action.payload);
+			yield put(fetchRouteSuccess(result));
+		} catch (e) {
+			yield put(fetchRouteFailure(e));
+		}
+	}
+}
+
 export function* rootSagas() {
 	yield fork(signupSaga);
 	yield fork(loginSaga);
 	yield fork(profileRequestSaga);
 	yield fork(profileGetSaga);
 	yield fork(addressListGetSaga);
+	yield fork(routeSaga);
 }

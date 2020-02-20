@@ -1,9 +1,11 @@
 import React, {useState, useCallback} from "react";
 import Select from "react-select";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {fetchRouteRequest} from "../../modules/route/actions";
 
 const OrderForm = () => {
-	const addresses = useSelector(state => state.route.data.addresses);
+	const dispatch = useDispatch();
+	const addresses = useSelector(state => state.route.addresses.addresses);
 
 	// Local state
 	const [addressOne, setAddressOne] = useState(null);
@@ -31,9 +33,19 @@ const OrderForm = () => {
 		[setAddressTwo]
 	);
 
+	const handleSubmit = e => {
+		e.preventDefault();
+		dispatch(
+			fetchRouteRequest({
+				addressOne,
+				addressTwo
+			})
+		);
+	};
+
 	return (
 		<>
-			<form action="/" method="">
+			<form action="/" method="" onSubmit={handleSubmit}>
 				<div className="address__group">
 					<Select
 						options={filteredOptions}
