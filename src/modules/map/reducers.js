@@ -5,6 +5,7 @@ import {
 	fetchRouteRequest,
 	fetchRouteSuccess,
 	fetchRouteFailure,
+	clearOrder,
 } from "./actions";
 
 import {handleActions} from 'redux-actions';
@@ -20,10 +21,11 @@ const addresses = handleActions(
 const route = handleActions(
 	{
 		[fetchRouteSuccess]: (state, action) => action.payload,
+		[clearOrder]: (state, action) => action.payload,
 	},
 	{
 		status: false,
-		coordinates: null
+		coordinates: null,
 	}
 );
 
@@ -33,7 +35,7 @@ const pending = handleActions({
 	[fetchAddressFailure]: () => false,
 	[fetchRouteRequest]: () => true,
 	[fetchRouteSuccess]: () => false,
-	[fetchRouteFailure]: () => false
+	[fetchRouteFailure]: () => false,
 }, false);
 
 const error = handleActions({
@@ -42,7 +44,7 @@ const error = handleActions({
 	[fetchAddressFailure]: () => false,
 	[fetchRouteRequest]: () => true,
 	[fetchRouteSuccess]: () => false,
-	[fetchRouteFailure]: () => false
+	[fetchRouteFailure]: () => false,
 }, null);
 
 export default combineReducers({

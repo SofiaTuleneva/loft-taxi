@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from "react";
 import Select from "react-select";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchRouteRequest} from "../../modules/map/actions";
+import {fetchRouteRequest, clearOrder} from "../../modules/map/actions";
 
 const OrderForm = () => {
 	const dispatch = useDispatch();
@@ -45,6 +45,22 @@ const OrderForm = () => {
 		setOrderIsReady(true);
 	};
 
+	const handleClearOrder = useCallback(
+		e => {
+			setOrderIsReady(false);
+			setAddressOne(null);
+			setAddressTwo(null);
+
+			dispatch(
+				clearOrder({
+					status: false,
+					coordinates: null,
+				})
+			);
+		},
+		[setOrderIsReady, dispatch]
+	);
+
 	return (
 		<>
 			{orderIsReady ? (
@@ -53,7 +69,7 @@ const OrderForm = () => {
 					<p className="panel__subtext">
 						Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
 					</p>
-					<button className="form__btn">
+					<button className="form__btn" onClick={handleClearOrder}>
 						Сделать новый заказ
 					</button>
 				</>
@@ -77,12 +93,9 @@ const OrderForm = () => {
 							isSearchable
 						/>
 					</div>
-					<input
-						type="submit"
-						className="form__btn"
-						value="Вызвать такси"
-						disabled={!addressOne || !addressTwo}
-					/>
+					<button type="submit" className="form__btn" disabled={!addressOne || !addressTwo}>
+						Вызвать такси
+					</button>
 				</form>
 			)}
 		</>

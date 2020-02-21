@@ -1,15 +1,27 @@
 import React, {useEffect, useRef} from "react";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import mapboxgl from "mapbox-gl";
 import {mapboxToken} from "../../constants/Tokens";
 import Header from '../Header';
 import OrderPanel from "./OrderPanel";
 import {drawRoute} from "./DrawRoute";
+import {clearOrder} from "../../modules/map/actions";
+
 
 const Map = () => {
+	const dispatch = useDispatch();
 	const mapRef = useRef();
 	mapboxgl.accessToken = mapboxToken;
 	const route = useSelector(state => state.map.route);
+
+	useEffect(() => {
+		dispatch(
+			clearOrder({
+				status: false,
+				coordinates: null,
+			})
+		);
+	}, [dispatch]);
 
 	useEffect(() => {
 		const map = new mapboxgl.Map({
