@@ -30,7 +30,7 @@ const App = () => {
 				token: state.auth.token,
 			}));
 		}
-	}, []);
+	}, [dispatch, state.auth.isLoggedIn, state.auth.token]);
 
 	return (
 		<div className="App">

@@ -1,89 +1,88 @@
-import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {fetchLoginRequest} from '../../modules/auth/actions';
-import {Link} from 'react-router-dom';
-import {paths} from '../../constants/Paths';
+import React from "react";
+import {useForm} from "react-hook-form";
+import {Button, FormControl} from "@material-ui/core";
+import {fetchLoginRequest} from "../../modules/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {Redirect, Link} from "react-router-dom";
+import {paths} from "../../constants/Paths";
 
-import {
-	Button,
-	FormControl,
-	InputLabel,
-	Input
-} from '@material-ui/core';
-
-const LoginForm = () => {
-
-	const state = useSelector(state => state.auth);
+function LoginForm() {
+	const auth = useSelector(state => state.auth);
 	const dispatch = useDispatch();
+	const methods = useForm();
+	const {handleSubmit, register, errors} = methods;
 
-	const [data, setData] = useState({email: '', password: ''});
-
-	const handleSubmit = e => {
-		e.preventDefault();
+	const onSubmit = data => {
+		const {email, password} = data;
 
 		dispatch(fetchLoginRequest({
-			email: data.email,
-			password: data.password,
+			email,
+			password,
 		}));
 	};
 
-	const handleChange = ({target}) => {
-		setData({
-			...data,
-			[target.name]: target.value,
-		})
+	const errorMessages = {
+		email: {
+			pattern: <span>Введите email корректно</span>,
+			required: <span>Введите email</span>,
+		},
+		password: {
+			required: <span>Введите пароль</span>,
+		},
 	};
 
-	return state.isLoggedIn ? <Redirect to={paths.map}/> : (
-		<>
-			<form onSubmit={handleSubmit} className="login__form">
-				<h1 className="form__title">Войти</h1>
-				<div className="form__subtitle">
-					Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
+	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
+		<form onSubmit={handleSubmit(onSubmit)} className="login__form">
+			<h1 className="form__title">Войти</h1>
+			<div className="form__subtitle">
+				Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
+			</div>
+			<div className="input__group">
+				<FormControl fullWidth>
+					{errors?.email && errorMessages.email[errors.email.type]}
+					<input
+						id="email"
+						type="text"
+						name="email"
+						placeholder="Email*"
+						defaultValue=''
+						ref={register({
+							required: true,
+							pattern: /^\S+@\S+$/i,
+						})}
+					/>
+				</FormControl>
+			</div>
+			<div className="input__group">
+				<FormControl fullWidth>
+					{errors?.password && errorMessages.password[errors.password.type]}
+					<input
+						id="password"
+						type="password"
+						name="password"
+						placeholder="Пароль*"
+						defaultValue=''
+						ref={register({
+							required: true
+						})}
+					/>
+				</FormControl>
+			</div>
+			<div className="button__group">
+				<Button type="submit" data-testid="submit-button" variant="contained" color="primary">
+					Войти
+				</Button>
+			</div>
+			<div className="pending">
+				{auth.pending ? ' Загрузка...' : null}
+			</div>
+			{auth.error ?
+				<div data-testid={'error-message'} className="error">
+					{auth.error?.error}
 				</div>
-				<div className="input__group">
-					<FormControl fullWidth>
-						<InputLabel htmlFor="email">Email:</InputLabel>
-						<Input id="email"
-							   placeholder="Логин"
-							   type="text"
-							   name="email"
-							   value={data.email}
-							   onChange={handleChange}
-							   inputProps={{'data-testid': 'login-field'}}
-							   required
-						/>
-					</FormControl>
-				</div>
-				<div className="input__group">
-					<FormControl fullWidth>
-						<InputLabel htmlFor="password">Password:</InputLabel>
-						<Input id="password"
-							   placeholder="Пароль"
-							   type="password"
-							   name="password"
-							   value={data.password}
-							   onChange={handleChange}
-							   inputProps={{'data-testid': 'password-field'}}
-							   required
-						/>
-					</FormControl>
-				</div>
-				<div className="button__group">
-					<Button type="submit" disabled={state.pending} data-testid="submit-button" variant="contained" color="primary">
-						Войти
-					</Button>
-					<div className="pending">
-						{state.pending ? ' Загрузка...' : null}
-					</div>
-					{state.error ? <div data-testid={'error-message'} className="error">
-						{state.error?.error}
-					</div> : ''}
-				</div>
-			</form>
-		</>
+				: ''}
+		</form>
 	);
-};
+}
 
 export default LoginForm;

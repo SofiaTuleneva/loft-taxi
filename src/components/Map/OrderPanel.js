@@ -6,8 +6,6 @@ import OrderForm from "./OrderForm";
 
 const OrderPanel = () => {
 	const state = useSelector(state => state);
-	console.log(state.profile);
-
 	const history = useHistory();
 
 	const handleClick = () => {
