@@ -1,6 +1,6 @@
 import React from "react";
-import {useForm} from "react-hook-form";
-import {Button, FormControl} from "@material-ui/core";
+import {useForm, Controller} from "react-hook-form";
+import {Button, FormControl, TextField} from "@material-ui/core";
 import {fetchLoginRequest} from "../../modules/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, Link} from "react-router-dom";
@@ -10,7 +10,7 @@ function LoginForm() {
 	const auth = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 	const methods = useForm();
-	const {handleSubmit, register, errors} = methods;
+	const {handleSubmit, control, errors} = methods;
 
 	const onSubmit = data => {
 		const {email, password} = data;
@@ -40,31 +40,35 @@ function LoginForm() {
 			<div className="input__group">
 				<FormControl fullWidth>
 					{errors?.email && errorMessages.email[errors.email.type]}
-					<input
+					<Controller
+						as={<TextField />}
+						control={control}
 						id="email"
 						type="text"
 						name="email"
 						placeholder="Email*"
 						defaultValue=''
-						ref={register({
+						rules={{
 							required: true,
 							pattern: /^\S+@\S+$/i,
-						})}
+						}}
 					/>
 				</FormControl>
 			</div>
 			<div className="input__group">
 				<FormControl fullWidth>
 					{errors?.password && errorMessages.password[errors.password.type]}
-					<input
+					<Controller
+						as={<TextField />}
+						control={control}
 						id="password"
 						type="password"
 						name="password"
 						placeholder="Пароль*"
 						defaultValue=''
-						ref={register({
+						rules={{
 							required: true
-						})}
+						}}
 					/>
 				</FormControl>
 			</div>
