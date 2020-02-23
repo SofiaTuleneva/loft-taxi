@@ -5,6 +5,7 @@ import {fetchLoginRequest} from "../../modules/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, Link} from "react-router-dom";
 import {paths} from "../../constants/Paths";
+import {validationMessages} from "../../constants/Messages";
 
 function LoginForm() {
 	const auth = useSelector(state => state.auth);
@@ -13,22 +14,11 @@ function LoginForm() {
 	const {handleSubmit, control, errors} = methods;
 
 	const onSubmit = data => {
-		const {email, password} = data;
-
-		dispatch(fetchLoginRequest({
-			email,
-			password,
-		}));
+		dispatch(fetchLoginRequest(data));
 	};
 
-	const errorMessages = {
-		email: {
-			pattern: <span>Введите email корректно</span>,
-			required: <span>Введите email</span>,
-		},
-		password: {
-			required: <span>Введите пароль</span>,
-		},
+	const getHelperText = field => {
+		return errors && errors[field] && validationMessages[field][errors[field].type];
 	};
 
 	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
@@ -51,8 +41,8 @@ function LoginForm() {
 							required: true,
 							pattern: /^\S+@\S+$/i,
 						}}
-						error={errors?.email}
-						helperText={errors?.email && errorMessages.email[errors.email.type]}
+						error={!!errors.email}
+						helperText={getHelperText('email')}
 					/>
 				</FormControl>
 			</div>
@@ -67,15 +57,15 @@ function LoginForm() {
 						placeholder="Пароль*"
 						defaultValue=''
 						rules={{
-							required: true
+							required: true,
 						}}
-						error={errors?.password}
-						helperText={errors?.password && errorMessages.password[errors.password.type]}
+						error={!!errors.password}
+						helperText={getHelperText('password')}
 					/>
 				</FormControl>
 			</div>
 			<div className="button__group">
-				<Button type="submit" data-testid="submit-button" variant="contained" color="primary">
+				<Button type="submit" disabled={auth.pending} data-testid="submit-button" variant="contained" color="primary">
 					Войти
 				</Button>
 			</div>
