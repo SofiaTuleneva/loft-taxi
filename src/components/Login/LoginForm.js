@@ -32,16 +32,15 @@ function LoginForm() {
 	};
 
 	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
-		<form onSubmit={handleSubmit(onSubmit)} className="login__form">
+		<form noValidate onSubmit={handleSubmit(onSubmit)} className="login__form">
 			<h1 className="form__title">Войти</h1>
 			<div className="form__subtitle">
 				Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
 			</div>
 			<div className="input__group">
 				<FormControl fullWidth>
-					{errors?.email && errorMessages.email[errors.email.type]}
 					<Controller
-						as={<TextField />}
+						as={<TextField/>}
 						control={control}
 						id="email"
 						type="text"
@@ -52,14 +51,15 @@ function LoginForm() {
 							required: true,
 							pattern: /^\S+@\S+$/i,
 						}}
+						error={errors?.email}
+						helperText={errors?.email && errorMessages.email[errors.email.type]}
 					/>
 				</FormControl>
 			</div>
 			<div className="input__group">
 				<FormControl fullWidth>
-					{errors?.password && errorMessages.password[errors.password.type]}
 					<Controller
-						as={<TextField />}
+						as={<TextField/>}
 						control={control}
 						id="password"
 						type="password"
@@ -69,6 +69,8 @@ function LoginForm() {
 						rules={{
 							required: true
 						}}
+						error={errors?.password}
+						helperText={errors?.password && errorMessages.password[errors.password.type]}
 					/>
 				</FormControl>
 			</div>
