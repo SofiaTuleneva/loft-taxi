@@ -3,7 +3,7 @@ import {useForm, Controller} from "react-hook-form";
 import {Button, FormControl, TextField} from "@material-ui/core";
 import {fetchSignupRequest} from '../../modules/auth';
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {paths} from "../../constants/Paths";
 import {validationMessages} from "../../constants/Messages";
 
@@ -24,6 +24,9 @@ function SignupForm() {
 	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
 		<form noValidate onSubmit={handleSubmit(onSubmit)} className="login__form">
 			<h1 className="form__title">Регистрация</h1>
+			<div className="form__subtitle">
+				Уже зарегистрированы? <Link to={paths.login}>Войти</Link>
+			</div>
 			<div className="input__group">
 				<FormControl fullWidth>
 					<Controller

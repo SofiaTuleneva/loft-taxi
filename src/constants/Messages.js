@@ -2,8 +2,8 @@ import React from "react";
 
 export const validationMessages = {
 	email: {
-		pattern: <span>Введите email корректно</span>,
 		required: <span>Введите email</span>,
+		pattern: <span>Введите email корректно</span>,
 	},
 	password: {
 		required: <span>Введите пароль</span>,
@@ -13,5 +13,19 @@ export const validationMessages = {
 	},
 	surname: {
 		required: <span>Заполните поле</span>,
+	},
+	cardNumber: {
+		required: <span>Заполните поле</span>,
+		pattern: <span>Введите 16 цифр</span>,
+	},
+	expiryDate: {
+		required: <span>Заполните поле</span>,
+	},
+	cardName: {
+		required: <span>Заполните поле</span>,
+	},
+	cvc: {
+		required: <span>Заполните поле</span>,
+		pattern: <span>Введите cvc корректно</span>,
 	},
 };

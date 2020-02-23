@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {paths} from "../../constants/Paths";
 import {fetchProfileRequest} from "../../modules/profile";
+import {validationMessages} from "../../constants/Messages";
 
 const ProfileForm = () => {
 
@@ -29,6 +30,10 @@ const ProfileForm = () => {
 		history.push(paths.map);
 	};
 
+	const getHelperText = field => {
+		return errors && errors[field] && validationMessages[field][errors[field].type];
+	};
+
 	return (
 		<form noValidate onSubmit={handleSubmit(onSubmit)} className="form form--profile">
 			<h1 className="form__title">Профиль</h1>
@@ -45,7 +50,10 @@ const ProfileForm = () => {
 						defaultValue={defaultData.cardNumber || ''}
 						rules={{
 							required: true,
+							pattern: /^[0-9]{16}$/,
 						}}
+						error={!!errors.cardNumber}
+						helperText={getHelperText('cardNumber')}
 					/>
 				</FormControl>
 			</div>
@@ -61,6 +69,8 @@ const ProfileForm = () => {
 						rules={{
 							required: true,
 						}}
+						error={!!errors.expiryDate}
+						helperText={getHelperText('expiryDate')}
 					/>
 				</FormControl>
 			</div>
@@ -76,6 +86,8 @@ const ProfileForm = () => {
 						rules={{
 							required: true,
 						}}
+						error={!!errors.cardName}
+						helperText={getHelperText('cardName')}
 					/>
 				</FormControl>
 			</div>
@@ -90,7 +102,10 @@ const ProfileForm = () => {
 						defaultValue={defaultData.cvc || ''}
 						rules={{
 							required: true,
+							pattern: /^[0-9]{3,4}$/,
 						}}
+						error={!!errors.cvc}
+						helperText={getHelperText('cvc')}
 					/>
 				</FormControl>
 			</div>
