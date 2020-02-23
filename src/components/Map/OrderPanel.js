@@ -14,7 +14,7 @@ const OrderPanel = () => {
 
 	return (
 		<>
-			{state.profile.data ?
+			{state.profile.data.cardNumber ?
 				<div className="container">
 					<div className="map__panel">
 						<OrderForm/>

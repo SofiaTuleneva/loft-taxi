@@ -7,7 +7,7 @@ import {Redirect, Link} from "react-router-dom";
 import {paths} from "../../constants/Paths";
 import {validationMessages} from "../../constants/Messages";
 
-function LoginForm() {
+const LoginForm = () => {
 	const auth = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 	const methods = useForm();
@@ -79,6 +79,6 @@ function LoginForm() {
 				: ''}
 		</form>
 	);
-}
+};
 
 export default LoginForm;

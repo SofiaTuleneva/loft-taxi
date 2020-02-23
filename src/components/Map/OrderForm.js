@@ -2,10 +2,13 @@ import React, {useState, useCallback} from "react";
 import Select from "react-select";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchRouteRequest, clearOrder} from "../../modules/map/actions";
+import {useForm, Controller} from "react-hook-form";
 
 const OrderForm = () => {
 	const dispatch = useDispatch();
 	const addresses = useSelector(state => state.map.addresses.addresses);
+	const methods = useForm();
+	const {handleSubmit, control} = methods;
 
 	// Local state
 	const [addressOne, setAddressOne] = useState(null);
@@ -18,24 +21,17 @@ const OrderForm = () => {
 		option => ![addressOne, addressTwo].includes(option.label)
 	);
 
-	const handleChangeAddressOne = useCallback(
-		e => {
-			const value = e ? e.value : null;
-			setAddressOne(value);
-		},
-		[setAddressOne]
-	);
+	const handleChangeAddressOne = data => {
+		const value = data ? data[0].value : null;
+		setAddressOne(value);
+	};
 
-	const handleChangeAddressTwo = useCallback(
-		e => {
-			const value = e ? e.value : null;
-			setAddressTwo(value);
-		},
-		[setAddressTwo]
-	);
+	const handleChangeAddressTwo = data => {
+		const value = data ? data[0].value : null;
+		setAddressTwo(value);
+	};
 
-	const handleSubmit = e => {
-		e.preventDefault();
+	const onSubmit = () => {
 		dispatch(
 			fetchRouteRequest({
 				addressOne,
@@ -74,23 +70,23 @@ const OrderForm = () => {
 					</button>
 				</>
 			) : (
-				<form action="/" method="" onSubmit={handleSubmit}>
+				<form noValidate onSubmit={handleSubmit(onSubmit)} action="/" method="">
 					<div className="address__group">
-						<Select
+						<Controller
+							as={<Select />}
 							options={filteredOptions}
-							onChange={handleChangeAddressOne}
-							className="address__input"
+							control={control}
+							name="addressOne"
 							placeholder="Откуда"
-							isClearable
-							isSearchable
+							onChange={handleChangeAddressOne}
 						/>
-						<Select
+						<Controller
+							as={<Select />}
 							options={filteredOptions}
-							onChange={handleChangeAddressTwo}
-							className="address__input"
+							control={control}
+							name="addressTwo"
 							placeholder="Куда"
-							isClearable
-							isSearchable
+							onChange={handleChangeAddressTwo}
 						/>
 					</div>
 					<button type="submit" className="form__btn" disabled={!addressOne || !addressTwo}>
