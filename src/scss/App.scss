@@ -7,6 +7,8 @@
 @import 'layout/base';
 
 //components {
-@import 'login';
-@import 'header';
-@import 'map';
+@import 'components/Header';
+@import 'components/Login';
+@import 'components/Map';
+
+@import 'other';

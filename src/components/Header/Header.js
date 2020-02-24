@@ -1,17 +1,18 @@
 import React from 'react';
 import HeaderLogo from "./HeaderLogo";
 import HeaderNav from "./HeaderNav";
+import {AppBar, Toolbar} from "@material-ui/core";
 
 const Header = () => {
 	return (
-		<header className="header">
-			<div className="container">
-				<div className="header__line">
+		<div className="header">
+			<AppBar color="primary" position="static" className="header__appbar" >
+				<Toolbar className="header__toolbar">
 					<HeaderLogo/>
 					<HeaderNav/>
-				</div>
-			</div>
-		</header>
+				</Toolbar>
+			</AppBar>
+		</div>
 	);
 };
 

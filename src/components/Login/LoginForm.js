@@ -1,6 +1,6 @@
 import React from "react";
 import {useForm, Controller} from "react-hook-form";
-import {Button, FormControl, TextField} from "@material-ui/core";
+import {Button, FormControl, TextField, Typography} from "@material-ui/core";
 import {fetchLoginRequest} from "../../modules/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, Link} from "react-router-dom";
@@ -23,7 +23,7 @@ const LoginForm = () => {
 
 	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
 		<form noValidate onSubmit={handleSubmit(onSubmit)} className="login__form">
-			<h1 className="form__title">Войти</h1>
+			<Typography variant="h4">Войти</Typography>
 			<div className="form__subtitle">
 				Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
 			</div>
@@ -64,7 +64,7 @@ const LoginForm = () => {
 					/>
 				</FormControl>
 			</div>
-			<div className="button__group">
+			<div>
 				<Button type="submit" disabled={auth.pending} data-testid="submit-button" variant="contained" color="primary">
 					Войти
 				</Button>

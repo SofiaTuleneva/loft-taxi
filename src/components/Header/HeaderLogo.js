@@ -1,11 +1,13 @@
 import React from 'react'
 import HeaderIcon from '../../img/logo.svg'
+import {Typography} from "@material-ui/core";
+
 
 const HeaderLogo = () => {
     return (
-        <div className="header__logo">
+        <Typography>
             <img src={HeaderIcon} width="156" alt="logo" className="header__pic"/>
-        </div>
+        </Typography>
     )
 };
 

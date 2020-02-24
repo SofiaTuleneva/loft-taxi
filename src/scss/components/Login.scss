@@ -1,0 +1,19 @@
+.login {
+    height: 100vh;
+    background: url('../../img/bg.jpg') no-repeat 50% 50% /cover;
+}
+
+.login__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login__form {
+    position: relative;
+    background-color: $white;
+    padding: 65px 50px;
+    border-radius: 5px;
+    width: 100%;
+}

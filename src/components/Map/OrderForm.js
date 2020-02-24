@@ -3,6 +3,7 @@ import Select from "react-select";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchRouteRequest, clearOrder} from "../../modules/map/actions";
 import {useForm, Controller} from "react-hook-form";
+import {Button} from "@material-ui/core";
 
 const OrderForm = () => {
 	const dispatch = useDispatch();
@@ -65,9 +66,9 @@ const OrderForm = () => {
 					<p className="panel__subtext">
 						Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
 					</p>
-					<button className="form__btn" onClick={handleClearOrder}>
+					<Button fullWidth variant="contained" color="primary" className="form__btn" onClick={handleClearOrder}>
 						Сделать новый заказ
-					</button>
+					</Button>
 				</>
 			) : (
 				<form noValidate onSubmit={handleSubmit(onSubmit)} action="/" method="">
@@ -80,6 +81,7 @@ const OrderForm = () => {
 							placeholder="Откуда"
 							onChange={handleChangeAddressOne}
 						/>
+						<br/>
 						<Controller
 							as={<Select />}
 							options={filteredOptions}
@@ -89,9 +91,9 @@ const OrderForm = () => {
 							onChange={handleChangeAddressTwo}
 						/>
 					</div>
-					<button type="submit" className="form__btn" disabled={!addressOne || !addressTwo}>
+					<Button fullWidth variant="contained" color="primary" type="submit" className="form__btn" disabled={!addressOne || !addressTwo}>
 						Вызвать такси
-					</button>
+					</Button>
 				</form>
 			)}
 		</>
