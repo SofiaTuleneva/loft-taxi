@@ -6,6 +6,7 @@ import {useHistory} from "react-router-dom";
 import {paths} from "../../constants/Paths";
 import {fetchProfileRequest} from "../../modules/profile";
 import {validationMessages} from "../../constants/Messages";
+import McIcon from "../../img/mc_symbol.svg";
 
 const ProfileForm = () => {
 
@@ -78,6 +79,9 @@ const ProfileForm = () => {
 											helperText={getHelperText('expiryDate')}
 										/>
 									</FormControl>
+								</div>
+								<div className="mc-logo">
+									<img src={McIcon} width="30" alt="logo" className="logo__icon" />
 								</div>
 							</div>
 							<div className="form__panel">
