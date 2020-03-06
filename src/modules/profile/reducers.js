@@ -2,6 +2,7 @@ import {
 	fetchProfileFailure,
 	fetchProfileRequest,
 	fetchProfileSuccess,
+	fetchProfileGet,
 } from "./actions";
 
 import {handleActions} from 'redux-actions';
@@ -13,6 +14,7 @@ const data = handleActions({
 
 const pending = handleActions({
 	[fetchProfileRequest]: () => true,
+	[fetchProfileGet]: () => true,
 	[fetchProfileSuccess]: () => false,
 	[fetchProfileFailure]: () => false,
 }, false);

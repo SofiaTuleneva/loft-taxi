@@ -77,6 +77,9 @@ const LoginForm = () => {
 					<div className="pending">
 						{state.pending ? ' Загрузка...' : null}
 					</div>
+					{state.error ? <div data-testid={'error-message'} className="error">
+						{state.error?.error}
+					</div> : ''}
 				</div>
 			</form>
 		</>

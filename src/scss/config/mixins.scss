@@ -10,12 +10,18 @@ $small: 402px;
 $grey: #747474;
 $darkgrey: #505050;
 $blue: #1473e6;
+$lightblue: #1de9ff;
 $yellow: #ffc617;
+$yellowHover: rgb(178, 138, 16);
 $white: #fff;
-$input-border: #eaeaea;// media
+$input-border: #eaeaea;
+$black: #333333;
+$disabled: rgba(0, 0, 0, 0.12);
+$disabled-text: rgba(0, 0, 0, 0.26);
 
+// media
 @function rem($px) {
-    @return $px / 16px+rem;
+    @return $px / 16px + rem;
 }
 
 @mixin desktop {
