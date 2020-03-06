@@ -1,11 +1,10 @@
 import React from 'react';
 import {logoutAction} from "../../modules/auth/actions";
 import {useDispatch} from "react-redux";
-import {Link} from 'react-router-dom';
 import {paths} from '../../constants/Paths';
+import {Button} from "@material-ui/core";
 
 const HeaderNav = () => {
-
 	const dispatch = useDispatch();
 
 	const handleLogout = e => {
@@ -14,13 +13,11 @@ const HeaderNav = () => {
 	};
 
 	return (
-		<>
-			<ul className="header__menu">
-				<li className="menu__item"><Link to={paths.map}>Карта</Link></li>
-				<li className="menu__item"><Link to={paths.profile}>Профиль</Link></li>
-				<li className="menu__item"><a href="/" onClick={handleLogout}>Выйти</a></li>
-			</ul>
-		</>
+		<div>
+			<Button href={paths.map}>Карта</Button>
+			<Button href={paths.profile}>Профиль</Button>
+			<Button onClick={handleLogout}>Выйти</Button>
+		</div>
 	);
 };
 

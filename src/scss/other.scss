@@ -1,0 +1,188 @@
+.form__subtitle {
+  margin: 30px 0;
+  font-size: 16px;
+  color: $darkgrey;
+}
+
+.form__link {
+  text-decoration: none;
+  color: $blue;
+}
+
+.input__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.input__label {
+  color: $grey;
+  font-size: 16px;
+}
+
+.button__group {
+  float: right;
+}
+
+.form__input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid $input-border;
+  padding: 5px;
+  &:focus {
+    border: none;
+    border-bottom: 3px solid $blue;
+    outline: none;
+  }
+}
+
+.form__btn {
+  display: block;
+  margin-left: auto;
+  margin-top: 35px;
+  border: none;
+  background-color: $yellow;
+  font-size: 16px;
+  padding: 10px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: $black;
+  text-align: center;
+}
+
+.pending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.bg-container {
+  height: 100vh;
+  background: url('../img/bg.jpg') no-repeat 50% 50% /cover;
+}
+
+.profile__content {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.form {
+  background-color: $white;
+  padding: 65px 50px;
+  border-radius: 5px;
+  &--profile {
+    text-align: center;
+    .form__subtitle {
+      margin-top: 10px;
+    }
+    .form__input {
+      font-size: 24px;
+    }
+    .form__btn {
+      margin: 0 auto;
+      margin-top: 35px;
+    }
+  }
+}
+
+.form__panels {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form__panel {
+  flex: 0 0 48%;
+  box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+  padding: 35px 30px 30px 30px;
+  position: relative;
+  border-radius: 4px;
+
+  .input__group {
+    margin-top: 35px;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+  }
+}
+
+.mc-logo {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.input__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.input__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input__block {
+  flex: 0 0 48%;
+}
+
+.form__subtitle {
+  margin: 30px 0;
+  font-size: 16px;
+  color: $darkgrey;
+}
+
+.input__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.content__part {
+  position: relative;
+  flex: 0 0 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+}
+
+.panel__subtext {
+  margin: 20px 0;
+}
+
+.address__input {
+  width: 100%;
+  margin: 30px 0;
+}
+
+.address__group {
+  padding: 0;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.mc-logo {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}

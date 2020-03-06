@@ -7,7 +7,7 @@ import {paths} from './constants/Paths';
 import './scss/App.scss';
 
 // Theme
-import {ThemeProvider} from '@material-ui/core';
+import {AppBar, ThemeProvider, Toolbar, withStyles} from '@material-ui/core';
 import {theme} from 'loft-taxi-mui-theme';
 
 // Components
@@ -18,8 +18,10 @@ import Signup from './components/Signup';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProfileGet} from "./modules/profile";
 import {fetchAddressRequest} from "./modules/map";
+import HeaderLogo from "./components/Header/HeaderLogo";
+import HeaderNav from "./components/Header/HeaderNav";
 
-const App = () => {
+const App = (props) => {
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
 
@@ -30,9 +32,9 @@ const App = () => {
 				token: state.auth.token,
 			}));
 		}
-	}, []);
+	}, [dispatch, state.auth.isLoggedIn, state.auth.token]);
 
-	return (
+		return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
 				<Switch>

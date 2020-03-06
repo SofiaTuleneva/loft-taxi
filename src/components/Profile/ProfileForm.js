@@ -1,134 +1,140 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {fetchProfileRequest} from '../../modules/profile/actions';
+import React, {useEffect, useState} from "react";
+import {useForm, Controller} from "react-hook-form";
+import {Button, FormControl, TextField, Typography} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {paths} from "../../constants/Paths";
-import {
-	Button, FormControl, InputLabel
-} from '@material-ui/core';
+import {fetchProfileRequest} from "../../modules/profile";
+import {validationMessages} from "../../constants/Messages";
+import McIcon from "../../img/mc_symbol.svg";
 
 const ProfileForm = () => {
 
 	const state = useSelector(state => state);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const {cardNumber, expiryDate, cardName, cvc} = state.profile.data;
 
-	const [data, setData] = useState({
-		cardNumber,
-		expiryDate,
-		cardName,
-		cvc,
-	});
+	const [defaultData, setData] = useState(state.profile.data);
+	const methods = useForm();
+	const {reset, handleSubmit, control, errors} = methods;
 
 	useEffect(() => {
 		setData(state.profile.data);
-	}, [state.profile.data]);
+		reset(state.profile.data);
+	}, [state.profile.data, reset]);
 
-	const handleSubmit = e => {
+	const onSubmit = data => {
 		dispatch(fetchProfileRequest({
-			cardNumber: data.cardNumber,
-			expiryDate: data.expiryDate,
-			cardName: data.cardName,
-			cvc: data.cvc,
+			...data,
 			token: state.auth.token,
 		}));
-
 		history.push(paths.map);
 	};
 
-	const handleChange = ({target}) => {
-		setData({
-			...data,
-			[target.name]: target.value,
-		})
+	const getHelperText = field => {
+		return errors && errors[field] && validationMessages[field][errors[field].type];
 	};
 
 	return (
-		<>
-			<div className="bg-container">
-				<div className="container">
-					<div className="profile__content">
+		<div className="bg-container">
+			<div className="container">
+				<div className="profile__content">
+					<form noValidate onSubmit={handleSubmit(onSubmit)} className="form form--profile">
+						<Typography variant="h4">Профиль</Typography>
+						<div className="form__subtitle">Способ оплаты</div>
 
-						<form action="" method="" onSubmit={handleSubmit} className="form form--profile">
-							<h1 className="form__title">Профиль</h1>
-							<div className="form__subtitle">Способ оплаты</div>
-
-							<div className="form__panels">
-								<div className="form__panel">
-									<div className="input__group">
-										<FormControl fullWidth>
-											<InputLabel htmlFor="cardNumber">Номер карты*</InputLabel>
-											<input id="cardNumber"
-												   placeholder="Номер карты"
-												   type="text"
-												   name="cardNumber"
-												   defaultValue={data.cardNumber}
-												   onChange={handleChange}
-												   required
-											/>
-										</FormControl>
-									</div>
-									<div className="input__group">
-										<FormControl fullWidth>
-											<InputLabel htmlFor="expiryDate">Срок действия*</InputLabel>
-											<input id="expiryDate"
-												   placeholder="Срок действия"
-												   type="text"
-												   name="expiryDate"
-												   defaultValue={data.expiryDate}
-												   onChange={handleChange}
-												   required
-											/>
-										</FormControl>
-									</div>
+						<div className="form__panels">
+							<div className="form__panel">
+								<div className="input__group">
+									<FormControl fullWidth>
+										<Controller
+											as={<TextField/>}
+											control={control}
+											type="text"
+											name="cardNumber"
+											placeholder="Номер карты*"
+											defaultValue={defaultData.cardNumber || ''}
+											rules={{
+												required: true,
+												pattern: /^[0-9]{16}$/,
+											}}
+											error={!!errors.cardNumber}
+											helperText={getHelperText('cardNumber')}
+										/>
+									</FormControl>
 								</div>
-								<div className="form__panel">
-									<div className="input__group">
-										<FormControl fullWidth>
-											<InputLabel htmlFor="cardName">Имя владельца*</InputLabel>
-											<input id="cardName"
-												   placeholder="Имя владельца"
-												   type="text"
-												   name="cardName"
-												   defaultValue={data.cardName}
-												   onChange={handleChange}
-												   required
-											/>
-										</FormControl>
-									</div>
-									<div className="input__group">
-										<FormControl fullWidth>
-											<InputLabel htmlFor="cvc">CVC*</InputLabel>
-											<input id="cvc"
-												   placeholder="CVC"
-												   type="text"
-												   name="cvc"
-												   defaultValue={data.cvc}
-												   onChange={handleChange}
-												   required
-											/>
-										</FormControl>
-									</div>
+								<div className="input__group">
+									<FormControl fullWidth>
+										<Controller
+											as={<TextField/>}
+											control={control}
+											type="text"
+											name="expiryDate"
+											placeholder="Срок действия*"
+											defaultValue={defaultData.expiryDate || ''}
+											rules={{
+												required: true,
+											}}
+											error={!!errors.expiryDate}
+											helperText={getHelperText('expiryDate')}
+										/>
+									</FormControl>
+								</div>
+								<div className="mc-logo">
+									<img src={McIcon} width="30" alt="logo" className="logo__icon" />
 								</div>
 							</div>
+							<div className="form__panel">
+								<div className="input__group">
+									<FormControl fullWidth>
+										<Controller
+											as={<TextField/>}
+											control={control}
+											type="text"
+											name="cardName"
+											placeholder="Имя владельца*"
+											defaultValue={defaultData.cardName || ''}
+											rules={{
+												required: true,
+											}}
+											error={!!errors.cardName}
+											helperText={getHelperText('cardName')}
+										/>
+									</FormControl>
+								</div>
+								<div className="input__group">
+									<FormControl fullWidth>
+										<Controller
+											as={<TextField/>}
+											control={control}
+											type="text"
+											name="cvc"
+											placeholder="CVC*"
+											defaultValue={defaultData.cvc || ''}
+											rules={{
+												required: true,
+												pattern: /^[0-9]{3,4}$/,
+											}}
+											error={!!errors.cvc}
+											helperText={getHelperText('cvc')}
+										/>
+									</FormControl>
+								</div>
+							</div>
+						</div>
 
-							<Button type="submit" disabled={state.profile.pending} variant="contained"
-									color="primary" className="form__btn">
+						<br/>
+						<br/>
+						<div align="center">
+							<Button type="submit" data-testid="submit-button" variant="contained"
+									color="primary">
 								Сохранить
 							</Button>
-
-							<div className="pending">
-								{state.profile.pending ? ' Загрузка...' : ''}
-							</div>
-
-						</form>
-
-
-					</div>
+						</div>
+					</form>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

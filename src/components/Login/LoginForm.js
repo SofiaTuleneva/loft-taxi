@@ -1,88 +1,83 @@
-import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {fetchLoginRequest} from '../../modules/auth/actions';
-import {Link} from 'react-router-dom';
-import {paths} from '../../constants/Paths';
-
-import {
-	Button,
-	FormControl,
-	InputLabel,
-	Input
-} from '@material-ui/core';
+import React from "react";
+import {useForm, Controller} from "react-hook-form";
+import {Button, FormControl, TextField, Typography} from "@material-ui/core";
+import {fetchLoginRequest} from "../../modules/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {Redirect, Link} from "react-router-dom";
+import {paths} from "../../constants/Paths";
+import {validationMessages} from "../../constants/Messages";
 
 const LoginForm = () => {
-
-	const state = useSelector(state => state.auth);
+	const auth = useSelector(state => state.auth);
 	const dispatch = useDispatch();
+	const methods = useForm();
+	const {handleSubmit, control, errors} = methods;
 
-	const [data, setData] = useState({email: '', password: ''});
-
-	const handleSubmit = e => {
-		e.preventDefault();
-
-		dispatch(fetchLoginRequest({
-			email: data.email,
-			password: data.password,
-		}));
+	const onSubmit = data => {
+		dispatch(fetchLoginRequest(data));
 	};
 
-	const handleChange = ({target}) => {
-		setData({
-			...data,
-			[target.name]: target.value,
-		})
+	const getHelperText = field => {
+		return errors && errors[field] && validationMessages[field][errors[field].type];
 	};
 
-	return state.isLoggedIn ? <Redirect to={paths.map}/> : (
-		<>
-			<form onSubmit={handleSubmit} className="login__form">
-				<h1 className="form__title">Войти</h1>
-				<div className="form__subtitle">
-					Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
+	return auth.isLoggedIn ? <Redirect to={paths.map}/> : (
+		<form noValidate onSubmit={handleSubmit(onSubmit)} className="login__form">
+			<Typography variant="h4">Войти</Typography>
+			<div className="form__subtitle">
+				Новый пользователь? <Link to={paths.signup}>Зарегистрируйтесь</Link>
+			</div>
+			<div className="input__group">
+				<FormControl fullWidth>
+					<Controller
+						as={<TextField/>}
+						control={control}
+						id="email"
+						type="text"
+						name="email"
+						placeholder="Email*"
+						defaultValue=''
+						rules={{
+							required: true,
+							pattern: /^\S+@\S+$/i,
+						}}
+						error={!!errors.email}
+						helperText={getHelperText('email')}
+					/>
+				</FormControl>
+			</div>
+			<div className="input__group">
+				<FormControl fullWidth>
+					<Controller
+						as={<TextField/>}
+						control={control}
+						id="password"
+						type="password"
+						name="password"
+						placeholder="Пароль*"
+						defaultValue=''
+						rules={{
+							required: true,
+						}}
+						error={!!errors.password}
+						helperText={getHelperText('password')}
+					/>
+				</FormControl>
+			</div>
+			<div>
+				<Button type="submit" disabled={auth.pending} data-testid="submit-button" variant="contained" color="primary">
+					Войти
+				</Button>
+			</div>
+			<div className="pending">
+				{auth.pending ? ' Загрузка...' : null}
+			</div>
+			{auth.error ?
+				<div data-testid={'error-message'} className="error">
+					{auth.error?.error}
 				</div>
-				<div className="input__group">
-					<FormControl fullWidth>
-						<InputLabel htmlFor="email">Email:</InputLabel>
-						<Input id="email"
-							   placeholder="Логин"
-							   type="text"
-							   name="email"
-							   value={data.email}
-							   onChange={handleChange}
-							   inputProps={{'data-testid': 'login-field'}}
-							   required
-						/>
-					</FormControl>
-				</div>
-				<div className="input__group">
-					<FormControl fullWidth>
-						<InputLabel htmlFor="password">Password:</InputLabel>
-						<Input id="password"
-							   placeholder="Пароль"
-							   type="password"
-							   name="password"
-							   value={data.password}
-							   onChange={handleChange}
-							   inputProps={{'data-testid': 'password-field'}}
-							   required
-						/>
-					</FormControl>
-				</div>
-				<div className="button__group">
-					<Button type="submit" disabled={state.pending} data-testid="submit-button" variant="contained" color="primary">
-						Войти
-					</Button>
-					<div className="pending">
-						{state.pending ? ' Загрузка...' : null}
-					</div>
-					{state.error ? <div data-testid={'error-message'} className="error">
-						{state.error?.error}
-					</div> : ''}
-				</div>
-			</form>
-		</>
+				: ''}
+		</form>
 	);
 };
 

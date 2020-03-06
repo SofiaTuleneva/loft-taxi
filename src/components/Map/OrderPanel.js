@@ -3,11 +3,10 @@ import {useSelector} from "react-redux";
 import {Link, useHistory} from 'react-router-dom';
 import {paths} from "../../constants/Paths";
 import OrderForm from "./OrderForm";
+import {Paper, Typography} from '@material-ui/core';
 
 const OrderPanel = () => {
 	const state = useSelector(state => state);
-	console.log(state.profile);
-
 	const history = useHistory();
 
 	const handleClick = () => {
@@ -16,23 +15,23 @@ const OrderPanel = () => {
 
 	return (
 		<>
-			{state.profile.data ?
-				<div className="container">
+			{state.profile.data.cardNumber ?
+				<Paper>
 					<div className="map__panel">
 						<OrderForm/>
 					</div>
-				</div>
+				</Paper>
+
 				:
-				<div className="container">
-					<div className="map__panel">
-						<h1>Заполните платежные данные</h1>
-						<p className="panel__subtext">
-							Укажите информацию о банковской карте, чтобы сделать
-							заказ.
-						</p>
-						<Link className="form__btn" to={paths.profile} onClick={handleClick}>Перейти в
-							профиль</Link>
-					</div>
+
+				<div className="map__panel">
+					<Typography variant="h4">Заполните платежные данные</Typography>
+					<p className="panel__subtext">
+						Укажите информацию о банковской карте, чтобы сделать
+						заказ.
+					</p>
+					<Link className="form__btn" to={paths.profile} onClick={handleClick}>Перейти в
+						профиль</Link>
 				</div>
 			}
 		</>
